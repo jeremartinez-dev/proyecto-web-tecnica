@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Escuela JFK</title>
+  <link rel="stylesheet" href="style_login.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body>
+  <div class="container" id="form-container">
+    <h2 id="form-title">
+      <img src="logo1.png" alt="Logo" class="logo">
+      <span id="form-text">Iniciar Sesión</span>
+    </h2>
+
+<form method="post" action="login.php">
+    <div id="login-form">
+      <div class="input-group">
+        <i class="fa fa-id-card"></i>
+
+        <input type="text" id="login-email" name="email" placeholder="Email o usuario" />
+
+      </div>
+      <div class="input-group">
+        <i class="fa fa-lock"></i>
+
+        <input type="password" id="login-password" name="contra" placeholder="Contraseña" />
+
+        <i class="fa fa-eye toggle-pass" onclick="togglePassword('login-password', this)"></i>
+      </div>
+      <div class="options">
+        <label><input type="checkbox" id="remember" /> Recordarme</label>
+        <a href="#">¿No recuerdas tu contraseña?</a>
+      </div>
+
+      <button type="submit" >Iniciar sesión</button>
+      <div class="switch">
+        ¿No tienes una cuenta? <a onclick="toggleForm()">Registrarse</a>
+      </div>
+    </div>
+</form>
+
+
+<form method="post" action="registro.php">
+    <div id="register-form" style="display:none;">
+         <div class="input-groupt">
+      </div>
+      <div class="input-group">
+        <i class="fa fa-id-card"></i>
+        <input type="text" name="email" id="register-email" placeholder="Email" />
+      </div>
+      <div class="input-group">
+        <i class="fa fa-lock"></i>
+        <input type="password"name="contra" id="register-password"  placeholder="Contraseña" />
+        <i class="fa fa-eye toggle-pass" onclick="togglePassword('register-password', this)"></i>
+      </div>
+      <div class="options">
+        <label><input type="checkbox" id="terms" /> Acepto los términos y condiciones</label>
+      </div>
+      <button type="submit" >Registrarse</button>
+      <div class="switch">
+        ¿Ya tienes cuenta? <a onclick="toggleForm()">Iniciar sesión</a>
+      </div>
+    </div>
+</form>
+    <div class="message" id="message"></div>
+  </div>
+
+  <div id="loader-overlay">
+  <div class="loader"></div>
+</div>  
+
+<script src="script_login.js"></script>
+
+
+</body>
+</html>

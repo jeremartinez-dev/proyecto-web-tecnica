@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escuela Técnica - John F. Kennedy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+        * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffffff;
+    }
+
+    /* NAV PRINCIPAL */
+    .barra-superior {
+      background-color: #004080;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .logo-titulo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .titulo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .menu {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .menu a::after {
+      content: "";
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: white;
+      transition: width 0.3s;
+    }
+
+    .menu a:hover::after {
+      width: 100%;
+    }
+
+    .btn-logout, .btn-login {
+      background-color: white;
+      color: #004080;
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .btn-logout:hover, .btn-login:hover {
+      background-color: #003366;
+      color: white;
+    }
+
+    .espacio-bajo-menu {
+      margin-top: 70px;
+    }
+
+    /* Sección presentación */
+    .presentacion {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 40px;
+      padding: 40px 8%;
+      background-color: #e0e7f1;
+    }
+
+    .presentacion-texto {
+      flex: 1;
+    }
+
+    .presentacion-texto h2 {
+      font-size: 36px;
+      font-weight: 600;
+      color: #004080;
+      margin-bottom: 20px;
+    }
+
+    .presentacion-texto p {
+      font-size: 20px;
+      line-height: 1.5;
+      color: #222;
+    }
+
+    .presentacion-imagenes {
+      flex: 1;
+      max-width: 500px;
+      height: 320px;
+      background-color: #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .presentacion-imagenes img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .presentacion-imagenes img.active {
+      display: block;
+    }
+
+    /* NAV SECUNDARIO */
+    nav {
+      background: linear-gradient(90deg, #004080, #0066cc, #0099ff);
+      padding: 15px 0;
+      margin-top: 0;
+      animation: slideDown 0.8s ease forwards;
+    }
+
+    nav .container {
+      width: 90%;
+      margin: auto;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a::after {
+      content: "";
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #ffeb3b; /* Amarillo atractivo en hover */
+    }
+
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+
+    /* MAIN Y SECCIONES */
+main {
+  padding: 2rem 0;
+}
+
+section {
+  margin-bottom: 3rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+h2 {
+  color: #004080;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 3px solid black;
+  padding-bottom: 0.5rem;
+}
+
+h3 {
+  color: #004080;
+  font-size: 1.5rem;
+  margin: 1.5rem 0 1rem 0;
+}
+
+/* GRID DE TEMAS */
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.topic-card {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid black;
+}
+
+/* BLOQUES DE CÓDIGO */
+.code-example {
+  background-color: #2d3748;
+  color: #e2e8f0;
+  padding: 1.5rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1rem 0;
+  font-family: 'Courier New', monospace;
+}
+
+.code-example .comment {
+  color: #68d391;
+}
+
+.code-example .keyword {
+  color: #f56565;
+}
+
+.code-example .string {
+  color: #fbb6ce;
+}
+
+/* BLOQUES DESTACADOS */
+.highlight {
+  background-color: #fff3cd;
+  padding: 1rem;
+  border-radius: 5px;
+  border-left: 4px solid #ffc107;
+  margin: 1rem 0;
+}
+
+.example-output {
+  background-color: #d4edda;
+  padding: 1rem;
+  border-radius: 5px;
+  border-left: 4px solid #28a745;
+  margin: 1rem 0;
+}
+
+/* DIAGRAMA Y FORMULAS */
+.circuit-diagram {
+  background-color: #f8f9fa;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  margin: 1rem 0;
+  border: 2px dashed #6c757d;
+}
+
+.formula {
+  background-color: #e7f3ff;
+  padding: 1rem;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 1rem 0;
+  border: 1px solid #0066cc;
+}
+
+.separador {
+ border: none;
+ height: 3px;
+ background-color: #004080;
+ margin: 40px auto;
+ width: 80%;
+ border-radius: 2px;
+}
+
+
+    /* Animación aparición */
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="barra-superior">
+    <div class="logo-titulo">
+      <img src="img/logo.png" alt="Logo Escuela" class="logo" />
+      <span class="titulo">Tecnicaturas</span>
+    </div>
+
+    <div class="menu">
+      <a href="index_log.html">Inicio</a>
+      <a href="#sobre">Sobre la escuela</a>
+      <a href="#inscripcion">Inscripción</a>
+      <a href="#novedades">Novedades</a>
+      <a href="#contacto">Contacto</a>
+      <a href="#" class="btn-login" onclick="showLoaderAndGo('login.html')">Login</a>  
+      <a href="#" class="btn-logout" onclick="logout()">Cerrar sesión</a>
+    </div>
+  </header>
+
+  <div class="espacio-bajo-menu"></div>
+
+  <!-- Presentación -->
+  <section class="presentacion" id="sobre">
+    <div class="presentacion-texto">
+      <h2>Nuestras Tecnicaturas</h2>
+      <p>
+        En la Escuela Técnica John F. Kennedy ofrecemos una formación integral en <b>Programación</b>, 
+        <b>Informática</b> y <b>Electromecánica</b>.  
+        Nuestro objetivo es brindar a los estudiantes las competencias necesarias para enfrentar los 
+        desafíos del mundo actual, combinando teoría y práctica.  
+        Aquí, los alumnos aprenden a desarrollar software, administrar redes, diseñar y mantener sistemas mecánicos y electrónicos, 
+        preparándose para un futuro con múltiples oportunidades.
+      </p>
+    </div>
+    <div class="presentacion-imagenes">
+      <img src="img/tec1.jpg" alt="Tecnicatura 1" class="active">
+      <img src="img/tec2.jpg" alt="Tecnicatura 2">
+      <img src="img/tec3.jpg" alt="Tecnicatura 3">
+    </div>
+  </section>
+
+  <hr class="separador">
+
+  <!-- Menú de navegación -->
+  <nav class="nav-animado">
+    <div class="container">
+      <ul>
+        <li><a href="#programacion">Programación</a></li>
+        <li><a href="#informatica">Informática</a></li>
+        <li><a href="#electromecanica">Electromecánica</a></li>
+        <li><a href="#proyectos">Proyectos</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main class="container">
+    <!-- Sección Programación -->
+    <section id="programacion">
+      <h2>Programación</h2>
+      <p>Programación en la Escuela Técnica John F. Kennedy<br><br>
+        La programación es el arte y la ciencia de crear instrucciones que le permiten a una computadora resolver problemas, automatizar tareas y dar vida a aplicaciones que usamos en nuestra vida diaria. Desde un sitio web hasta un sistema bancario, pasando por aplicaciones móviles y videojuegos, todo se basa en líneas de código escritas por programadores que traducen ideas en soluciones concretas.<br>En la Escuela Técnica John F. Kennedy, la programación es una de las tecnicaturas más elegidas por los estudiantes. Su enseñanza comienza con una sólida formación en lógica computacional, donde los alumnos aprenden a razonar paso a paso y a estructurar soluciones claras y ordenadas. A partir de ahí, se introducen en distintos lenguajes de programación como Python, Java y C++, cada uno con un enfoque particular para que los estudiantes adquieran una visión amplia del mundo del software.<br>La metodología combina teoría y práctica. En las clases teóricas, los estudiantes aprenden los conceptos fundamentales como variables, estructuras de control, algoritmos y diseño de interfaces. En los talleres prácticos, trabajan en proyectos reales, desde aplicaciones simples hasta sistemas completos que simulan escenarios de la vida profesional. Además, se fomenta el trabajo en equipo, lo que prepara a los futuros técnicos para el mundo laboral donde la colaboración es clave.<br>Uno de los pilares de esta formación es la resolución de problemas. Los alumnos son desafiados constantemente con ejercicios que los invitan a pensar, analizar y encontrar diferentes caminos para llegar a la mejor solución. De esta manera, no solo adquieren habilidades técnicas, sino también competencias como la creatividad, la perseverancia y la capacidad de adaptación a nuevas tecnologías.<br>Al finalizar la tecnicatura, los egresados de la Escuela Técnica John F. Kennedy cuentan con una base sólida que les permite continuar estudios universitarios en carreras como Ingeniería en Sistemas o Ciencias de la Computación, o bien insertarse directamente en el mundo laboral como desarrolladores, testers de software o administradores de sistemas.</p>
+
+      <div class="topic-grid">
+        <div class="topic-card">
+          <h3>Variables y Tipos de Datos</h3>
+          <p>Las variables son contenedores para almacenar información. Los tipos básicos incluyen:</p>
+          <ul>
+            <li><strong>Enteros (int):</strong> Números enteros</li>
+            <li><strong>Decimales (float):</strong> Números con decimales</li>
+            <li><strong>Cadenas (string):</strong> Texto</li>
+            <li><strong>Booleanos (bool):</strong> Verdadero/Falso</li>
+          </ul>
+        </div>
+
+        <div class="topic-card">
+          <h3>Estructuras de Control</h3>
+          <p>Permiten controlar el flujo de ejecución del programa:</p>
+          <ul>
+            <li><strong>Condicionales:</strong> if, else, elif</li>
+            <li><strong>Bucles:</strong> for, while</li>
+            <li><strong>Funciones:</strong> Reutilización de código</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Ejemplo en Python - Calculadora Simple</h3>
+      <div class="code-example">
+        <span class="comment"># Calculadora básica en Python</span><br>
+        <span class="keyword">def</span> calculadora():<br>
+        &nbsp;&nbsp;<span class="keyword">print</span>(<span class="string">"=== Calculadora Técnica ==="</span>
+        <span class="comment"># Solicitar números al usuario</span>
+        num1 = <span class="keyword">float</span>(<span class="keyword">input</span>(<span class="string">"Ingresa el primer número: "</span>))
+        operacion = <span class="keyword">input</span>(<span class="string">"Operación (+, -, *, /): "</span>)
+        num2 = <span class="keyword">float</span>(<span class="keyword">input</span>(<span class="string">"Ingresa el segundo número: "</span>))
+
+        <span class="comment"># Realizar cálculo</span>
+        <span class="keyword">if</span> operacion == <span class="string">"+"</span>: resultado = num1 + num2
+        <span class="keyword">elif</span> operacion == <span class="string">"-"</span>: resultado = num1 - num2
+        <span class="keyword">elif</span> operacion == <span class="string">"*"</span>: resultado = num1 * num2
+        <span class="keyword">elif</span> operacion == <span class="string">"/"</span>:
+        <span class="keyword">if</span> num2 != 0: resultado = num1 / num2
+        <span class="keyword">else</span>:
+        <span class="keyword">return</span> <span class="string">"Error: División por cero"</span>
+
+        <span class="keyword">return</span> <span class="string">f"Resultado: {resultado}"</span>
+
+        <span class="comment"># Llamar a la función</span>calculadora()
+
+      </div>
+
+      <div class="highlight">
+        <strong>Conceptos clave:</strong> Este ejemplo muestra el uso de funciones, variables, condicionales, entrada de usuario y manejo básico de errores.
+      </div>
+
+      <h3>Ejemplo en C++ - Control de LED</h3>
+      <div class="code-example">
+        <span class="comment">// Programa para controlar un LED con Arduino</span>
+        <span class="keyword">#include</span> &lt;Arduino.h&gt;
+        <span class="comment">// Definir pin del LED</span>
+        <span class="keyword">const int</span> LED_PIN = 13;
+        <span class="keyword">void</span> setup() {
+          <span class="comment">// Configurar pin como salida</span>
+          pinMode(LED_PIN, OUTPUT);
+          Serial.begin(9600);
+          Serial.println(<span class="string">"Sistema de control LED iniciado"</span>);
+        }
+
+        <span class="keyword">void</span> loop() {
+          <span class="comment">// Encender LED</span>
+          digitalWrite(LED_PIN, HIGH);
+          Serial.println(<span class="string">"LED encendido"</span>);
+          delay(1000);
+          <span class="comment">// Apagar LED</span>
+          digitalWrite(LED_PIN, LOW);
+          Serial.println(<span class="string">"LED apagado"</span>);
+          delay(1000);
+        }
+      </div>
+    </section>
+
+    <!-- Sección Informática -->
+    <section id="informatica">
+      <h2>Informática</h2>
+      <p>Informática en la Escuela Técnica John F. Kennedy<br><br>
+        La informática es la ciencia que estudia el procesamiento, almacenamiento y transmisión de información mediante sistemas computacionales. Su alcance es enorme: desde la administración de bases de datos y redes, hasta el desarrollo de software y la ciberseguridad. La informática nos permite comprender cómo funcionan las computadoras y cómo podemos aprovecharlas para resolver problemas complejos en cualquier área del conocimiento.<br>En la Escuela Técnica John F. Kennedy, la tecnicatura en Informática brinda a los estudiantes una formación integral que combina conceptos teóricos, habilidades prácticas y proyectos aplicados. Desde los primeros años, los alumnos aprenden sobre la arquitectura de computadoras, conociendo cómo interactúan los distintos componentes como CPU, memoria RAM, almacenamiento y tarjetas gráficas. Esta comprensión fundamental les permite optimizar sistemas y solucionar problemas técnicos de manera eficiente.<br>Otro aspecto central del plan de estudios es el aprendizaje de sistemas operativos y software de gestión. Los estudiantes manejan plataformas como Windows, Linux y macOS, aprendiendo a instalar, configurar y mantener equipos y servidores. Además, se abordan temas de administración de redes, donde se estudia la conexión de dispositivos, protocolos de comunicación, seguridad y gestión de usuarios, preparando a los alumnos para trabajar con infraestructura tecnológica real.<br>La formación en Informática también incluye el manejo de bases de datos, enseñando a los estudiantes a almacenar, organizar y consultar información de manera efectiva mediante lenguajes como SQL. Además, se fomenta la resolución de problemas mediante proyectos prácticos, donde los alumnos desarrollan sistemas completos que integran software, hardware y redes, aplicando los conocimientos adquiridos de manera realista.<br>Durante la tecnicatura, se promueve el trabajo colaborativo y la investigación tecnológica, permitiendo a los estudiantes explorar nuevas herramientas y tecnologías emergentes. De esta manera, no solo se forman técnicos competentes, sino también profesionales capaces de adaptarse a los cambios rápidos del mundo digital.<br>Al finalizar la carrera, los egresados de la Escuela Técnica John F. Kennedy poseen una sólida base que les permite desarrollarse en áreas como administración de redes, soporte técnico, análisis de datos y desarrollo de software, además de poder continuar estudios superiores en carreras relacionadas con la informática y la tecnología.</p>
+      <div class="topic-grid">
+        <div class="topic-card">
+          <h3>Arquitectura de Computadoras</h3>
+          <p>Componentes principales de un sistema computacional:</p>
+          <ul>
+            <li><strong>CPU:</strong> Unidad Central de Procesamiento</li>
+            <li><strong>RAM:</strong> Memoria de Acceso Aleatorio</li>
+            <li><strong>Almacenamiento:</strong> HDD, SSD</li>
+            <li><strong>GPU:</strong> Unidad de Procesamiento Gráfico</li>
+          </ul>
+        </div>
+
+        <div class="topic-card">
+          <h3>Sistemas Operativos</h3>
+          <p>Software que gestiona los recursos del hardware:</p>
+          <ul>
+            <li><strong>Windows:</strong> Sistema comercial</li>
+            <li><strong>Linux:</strong> Sistema libre y abierto</li>
+            <li><strong>macOS:</strong> Sistema de Apple</li>
+             <li><strong>Embedded:</strong> Sistemas embebidos</li>
+           </ul>
+         </div>
+
+         <div class="topic-card">
+          <h3>Redes de Computadoras</h3>
+          <p>Conexión y comunicación entre dispositivos:</p>
+          <ul>
+           <li><strong>TCP/IP:</strong> Protocolo de internet</li>
+           <li><strong>Ethernet:</strong> Redes cableadas</li>
+           <li><strong>WiFi:</strong> Redes inalámbricas</li>
+           <li><strong>Routing:</strong> Enrutamiento de datos</li>
+         </ul>
+       </div>
+
+       <div class="topic-card">
+        <h3>Bases de Datos</h3>
+        <p>Almacenamiento y gestión de información:</p>
+        <ul>
+          <li><strong>SQL:</strong> Lenguaje de consultas</li>
+          <li><strong>MySQL:</strong> Sistema de gestión</li>
+          <li><strong>Normalización:</strong> Organización eficiente</li>
+          <li><strong>Índices:</strong> Optimización de consultas</li>
+           </ul>
+         </div>
+       </div>
+
+       <h3>Ejemplo SQL - Gestión de Estudiantes</h3>
+       <div class="code-example">
+        <span class="comment">-- Crear tabla de estudiantes</span>
+        <span class="keyword">CREATE TABLE</span> estudiantes (
+        id <span class="keyword">INT PRIMARY KEY AUTO_INCREMENT</span>, 
+        nombre <span class="keyword">VARCHAR</span>(50) <span class="keyword">NOT NULL</span>, 
+        apellido <span class="keyword">VARCHAR</span>50) <span class="keyword">NOT NULL</span>,
+        especialidad <span class="keyword">VARCHAR</span>(30),
+        año_ingreso <span class="keyword">INT</span>,
+        promedio <span class="keyword">DECIMAL</span>(4,2)
+        );
+
+        <span class="comment">-- Insertar datos</span>
+        <span class="keyword">INSERT INTO</span> estudiantes (nombre, apellido, especialidad, año_ingreso, promedio)
+        <span class="keyword">VALUES</span> 
+        (<span class="string">'Juan'</span>, <span class="string">'Pérez'</span>, <span class="string">'Electromecánica'</span>, 2023, 8.5),
+        (<span class="string">'María'</span>, <span class="string">'González'</span>, <span class="string">'Informática'</span>, 2023, 9.2),
+        (<span class="string">'Carlos'</span>, <span class="string">'Rodríguez'</span>, <span class="string">'Programación'</span>, 2022, 8.8);
+        <span class="comment">-- Consultar estudiantes con promedio alto</span>
+        <span class="keyword">SELECT</span> nombre, apellido, especialidad, promedio
+        <span class="keyword">FROM</span> estudiantes
+        <span class="keyword">WHERE</span> promedio >= 8.5
+        <span class="keyword">ORDER BY</span> promedio <span class="keyword">DESC</span>;
+      </div>
+
+      <div class="example-output">
+        <strong>Resultado de la consulta:</strong><br>
+         María González - Informática - 9.2<br>
+         Carlos Rodríguez - Programación - 8.8<br>
+         Juan Pérez - Electromecánica - 8.5</div>
+       </section>
+
+    <!-- Sección Electromecánica -->
+    <section id="electromecanica">
+      <h2>Electromecánica</h2>
+      <p>Electromecánica en la Escuela Técnica John F. Kennedy<br><br>
+        La electromecánica es una disciplina que combina los principios de la electricidad, la electrónica y la mecánica para diseñar, mantener y optimizar sistemas y máquinas automatizadas. Su alcance abarca desde pequeños dispositivos electrónicos hasta grandes sistemas industriales, siendo fundamental para el funcionamiento de fábricas, transportes y equipos tecnológicos modernos.<br>En la Escuela Técnica John F. Kennedy, la tecnicatura en Electromecánica brinda a los estudiantes una formación integral que incluye teoría, práctica y proyectos aplicados. Desde los primeros años, los alumnos aprenden sobre circuitos eléctricos, motores, sensores y actuadores, adquiriendo los conocimientos necesarios para interpretar planos, diagramas eléctricos y sistemas de control.<br>Uno de los pilares de la formación es la automatización industrial, donde los estudiantes estudian cómo diseñar y programar PLC (controladores lógicos programables), integrar sensores y actuadores, y desarrollar sistemas que optimicen procesos productivos. Además, aprenden sobre mantenimiento preventivo y correctivo, asegurando que los equipos funcionen de manera segura y eficiente.<br>La enseñanza combina la práctica en laboratorio con la resolución de problemas reales. Los alumnos realizan ensayos, montajes de circuitos, programación de microcontroladores y simulaciones de sistemas eléctricos y mecánicos. Esto les permite comprender no solo cómo funcionan los equipos, sino también cómo intervenir y mejorar su desempeño.<br>Durante la tecnicatura, se fomenta también la capacidad analítica y el pensamiento crítico, preparando a los estudiantes para enfrentar situaciones complejas y encontrar soluciones eficientes. Se promueve el trabajo en equipo y la aplicación de conocimientos interdisciplinarios, integrando la mecánica, la electricidad y la informática en proyectos concretos.<br>Al finalizar la carrera, los egresados de la Escuela Técnica John F. Kennedy cuentan con las competencias necesarias para desempeñarse en mantenimiento industrial, automatización, diseño de sistemas electromecánicos y control de procesos, así como la posibilidad de continuar estudios superiores en ingeniería o áreas tecnológicas avanzadas.</p>
+
+      <div class="topic-grid">
+        <div class="topic-card">
+          <h3>Circuitos Eléctricos</h3>
+          <p>Fundamentos de la electricidad:</p>
+          <ul>
+            <li><strong>Ley de Ohm:</strong> V = I × R</li>
+            <li><strong>Potencia:</strong> P = V × I</li>
+            <li><strong>Circuitos serie y paralelo</li>
+            <li><strong>Análisis de mallas</strong></li>
+          </ul>
+        </div>
+
+        <div class="topic-card">
+          <h3>Motores Eléctricos</h3>
+          <p>Máquinas que convierten energía eléctrica en mecánica:</p>
+          <ul>
+            <li><strong>Motor DC:</strong> Corriente continua</li>
+            <li><strong>Motor AC:</strong> Corriente alterna</li>
+            <li><strong>Motor paso a paso:</strong> Control preciso</li>
+            <li><strong>Servomotores:</strong> Control de posición</li>
+          </ul>
+        </div>
+
+        <div class="topic-card">
+          <h3>Automatización Industrial</h3>
+          <p>Sistemas de control automático:</p>
+          <ul>
+            <li><strong>PLC:</strong> Controladores lógicos programables</li>
+            <li><strong>Sensores:</strong> Detección de variables</li>
+            <li><strong>Actuadores:</strong> Elementos de acción</li>
+            <li><strong>HMI:</strong> Interfaz humano-máquina</li>
+          </ul>
+        </div>
+
+        <div class="topic-card">
+          <h3>Sistemas de Control</h3>
+          <p>Regulación y control de procesos:</p>
+          <ul>
+            <li><strong>Control ON/OFF:</strong> Todo o nada</li>
+            <li><strong>Control PID:</strong> Proporcional-Integral-Derivativo</li>
+            <li><strong>Lazo abierto:</strong> Sin retroalimentación</li>
+            <li><strong>Lazo cerrado:</strong> Con retroalimentación</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Cálculos Fundamentales</h3>
+      <div class="formula">
+        <strong>Ley de Ohm:</strong> V = I × R
+        <br><small>Donde V = Voltaje (V), I = Corriente (A), R = Resistencia (Ω)</small>
+      </div>
+      <div class="formula">
+        <strong>Potencia Eléctrica:</strong> P = V × I = I² × R = V²/R
+        <br><small>Donde P = Potencia (W)</small>
+      </div>
+
+      <h3>Ejemplo Práctico - Cálculo de Circuito</h3>
+      <div class="highlight">
+        <strong>Problema:</strong> Un motor consume 5 A de corriente a 220V. Calcular la potencia consumida y la resistencia interna del motor.
+      </div>
+
+      <div class="code-example">
+        <span class="comment"># Datos del problema</span>
+        voltaje = 220  <span class="comment"># Voltios</span>
+        corriente = 5  <span class="comment"># Amperios</span>
+        <span class="comment"># Cálculo de potencia</span>
+        potencia = voltaje * corriente
+        <span class="keyword">print</span>(<span class="string">f"Potencia consumida: {potencia} Watts"</span>)
+        <span class="comment"># Cálculo de resistencia (Ley de Ohm)</span>
+        resistencia = voltaje / corriente
+        <span class="keyword">print</span>(<span class="string">f"Resistencia interna: {resistencia} Ohmios"</span>)
+        <span class="comment"># Cálculo de energía en 8 horas de trabajo</span>
+        horas_trabajo = 8
+        energia_kwh = (potencia * horas_trabajo) / 1000
+        <span class="keyword">print</span>(<span class="string">f"Energía consumida en 8h: {energia_kwh} kWh"</span>)
+      </div>
+
+      <div class="example-output">
+        <strong>Resultado:</strong><br>
+        Potencia consumida: 1100 Watts<br>
+        Resistencia interna: 44 Ohmios<br>
+        Energía consumida en 8h: 8.8 kWh
+      </div>
+
+      <h3>Diagrama de Control de Motor</h3>
+      <div class="circuit-diagram">
+        <h4>Sistema de Control de Motor Trifásico</h4>
+        <p><strong>L1 L2 L3</strong> (Alimentación trifásica)<br>↓ ↓ ↓<br><strong>[Contactor K1]</strong><br> ↓ ↓ ↓<br><strong>[Relé térmico F1]</strong><br>↓ ↓ ↓<br><strong>MOTOR M1</strong>
+        </p>
+        <p><small>Control: Pulsador marcha S1, Pulsador paro S2, Contacto auxiliar K1</small></p>
+      </div>
+    </section>
+
+    <!-- Sección Proyectos -->
+    <section id="proyectos">
+      <h2>Proyectos Integradores</h2>
+      <p>La aplicación práctica de conocimientos a través de proyectos reales que combinan programación, informática y electromecánica.</p>
+
+      <div class="topic-grid">
+        <div class="topic-card">
+          <h3>Sistema de Control de Acceso</h3>
+          <p><strong>Componentes:</strong></p>
+          <ul>
+            <li>Arduino/PLC para control</li>
+            <li>Sensor RFID para identificación</li>
+            <li>Motor servo para cerradura</li>
+            <li>Display LCD para mensajes</li>
+            <li>Base de datos para usuarios</li>
+          </ul>
+          <p><strong>Tecnologías:</strong> C++, SQL, Circuitos digitales</p>
+        </div>
+
+        <div class="topic-card">
+          <h3>Monitor de Consumo Eléctrico</h3>
+          <p><strong>Funcionalidades:</strong></p>
+          <ul>
+            <li>Medición de voltaje y corriente</li>
+            <li>Cálculo de potencia en tiempo real</li>
+            <li>Interfaz web para visualización</li>
+            <li>Alertas por consumo excesivo</li>
+            <li>Histórico de consumos</li>
+          </ul>
+          <p><strong>Tecnologías:</strong> Python, HTML/CSS, Sensores analógicos</p>
+        </div>
+
+        <div class="topic-card">
+          <h3>Robot Seguidor de Línea</h3>
+          <p><strong>Características:</strong></p>
+          <ul>
+            <li>Sensores ópticos para detección</li>
+            <li>Motores DC con control PWM</li>
+            <li>Algoritmo PID para control</li>
+            <li>Comunicación Bluetooth</li>
+            <li>Configuración remota</li>
+          </ul>
+          <p><strong>Tecnologías:</strong> Arduino, Control automático, Electrónica</p>
+        </div>
+
+        <div class="topic-card">
+          <h3>Sistema SCADA Simplificado</h3>
+          <p><strong>Componentes:</strong></p>
+          <ul>
+            <li>Interfaz HMI táctil</li>
+            <li>Comunicación Modbus</li>
+            <li>Registro de alarmas</li>
+            <li>Gráficos de tendencias</li>
+            <li>Respaldo automático de datos</li>
+          </ul>
+          <p><strong>Tecnologías:</strong> LabVIEW, PLC, Redes industriales</p>
+        </div>
+      </div>
+
+      <h3>Metodología de Desarrollo de Proyectos</h3>
+      <div class="highlight">
+        <strong>Fases del proyecto:</strong>
+        <ol>
+          <li><strong>Análisis:</strong> Definición de requisitos y especificaciones</li>
+          <li><strong>Diseño:</strong> Arquitectura del sistema y selección de componentes</li>
+          <li><strong>Implementación:</strong> Desarrollo de software y montaje de hardware</li>
+          <li><strong>Pruebas:</strong> Verificación y validación del sistema</li>
+          <li><strong>Documentación:</strong> Manual técnico y de usuario</li>
+          <li><strong>Mantenimiento:</strong> Soporte y actualizaciones</li>
+        </ol>
+      </div>
+
+      <h3>Herramientas de Desarrollo</h3>
+      <div class="topic-grid">
+        <div class="topic-card">
+          <h3>Software de Programación</h3>
+          <ul>
+            <li>Arduino IDE</li>
+            <li>Visual Studio Code</li>
+            <li>Python IDLE</li>
+            <li>MySQL Workbench</li>
+          </ul>
+        </div>
+
+        <div class="topic-card">
+          <h3>Simulación y Diseño</h3>
+          <ul>
+            <li>Proteus (circuitos)</li>
+            <li>AutoCAD Electrical</li>
+            <li>MATLAB/Simulink</li>
+            <li>Fritzing</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer personalizado -->
+<footer style="background-color: #333333; padding: 30px 20px; text-align: center; color: white; font-size: 14px;">
+  <p>&copy; 2025 Escuela Técnica John F. Kennedy - Todos los derechos reservados.</p>
+  <p>Dirección: Ramón Cabrero 1751 (Código Postal: 1824) Lanús Este, Buenos Aires</p>
+  <p>Contacto: info@escuelakennedy.edu.ar | Tel: +54 9 11 4241-8547/4240-5026</p>
+</footer>
+
+</body>
+</html>

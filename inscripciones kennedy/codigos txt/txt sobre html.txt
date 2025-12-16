@@ -1,0 +1,195 @@
+<header class="barra-superior">
+    <div class="logo-titulo">
+      <img src="img/logo.png" alt="Logo Escuela" class="logo" />
+      <span class="titulo">Sobre la escuela</span>
+    </div>
+
+    <div class="menu">
+      <a href="index_log.html">Inicio</a>
+      <a href="inscripcion.html">Inscripción</a>
+      <a href="novedades.html">Novedades</a>
+      <a href="tecnicaturas.html">Tecnicaturas</a>
+      <a href="contactos.html">Contacto</a> 
+      <a href="#" class="btn-logout" onclick="logout()">Cerrar sesión</a>
+    </div>
+  </header>
+
+  <div class="espacio-bajo-menu"></div>
+
+
+  <div class="min-h-screen">
+    <!-- Hero Section -->
+    <section class="presentacion" id="sobre">
+     <div class="presentacion-texto">
+      <h1>Nuestra Institucion</h1>
+      <p><b></b>, 
+        <b>Informática</b> y <b>Electromecánica</b>.  
+        Nuestro objetivo es brindar a los estudiantes las competencias necesarias para enfrentar los 
+        desafíos del mundo actual, combinando teoría y práctica.  
+        Aquí, los alumnos aprenden a desarrollar software, administrar redes, diseñar y mantener sistemas mecánicos y electrónicos, 
+        preparándose para un futuro con múltiples oportunidades.
+      </p>
+    </div>
+    <div class="presentacion-imagenes">
+     <img src="img/" alt="colegio 1" class="active">
+     <img src="img/" alt="colegio 2">
+     <img src="img/" alt="colegio 3">
+   </div>
+ </section>
+
+ <hr class="separador">
+
+ <!-- Main Content -->
+ <div class="max-w-6xl mx-auto px-6 py-16">
+  <!-- Historia Section -->
+  <section class="mb-20">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-6">Nuestra Historia</h2>
+        <p class="text-muted-foreground text-lg mb-6 leading-relaxed">----------</p>
+        <p class="text-muted-foreground text-lg leading-relaxed">---------</p>
+      </div>
+
+      <div class="bg-muted rounded-lg p-8 text-center">
+        <img src="img/" alt="historia de la escuela" class="w-full h-80 object-cover rounded-lg mb-4" />
+        <p class="text-muted-foreground italic">----------</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="separador">
+
+  <!-- Misión y Visión -->
+  <section class="misionYvision">
+    <div class="grid md:grid-cols-2 gap-8">
+
+      <div class="card transparente border-primary/20 shadow-lg">
+        <div class="card-header bg-primary text-primary-foreground p-6 rounded-t-lg">
+          <h3 class="text-2xl m-0">Nuestra Misión</h3>
+        </div>
+        <div class="p-8">
+          <p class="text-foreground leading-relaxed"></p>
+        </div>
+      </div>
+
+      <div class="card border-secondary/20 shadow-lg">
+        <div class="card-header bg-secondary text-secondary-foreground p-6 rounded-t-lg">
+          <h3 class="text-2xl m-0">Nuestra Visión</h3>
+        </div>
+        <div class="p-8">
+          <p class="text-foreground leading-relaxed">Ser reconocidos como la institución educativa líder en innovación pedagógica, formando ciudadanos globales capaces de transformar positivamente su entorno, con sólida preparación académica y profundo sentido de responsabilidad social.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Valores -->
+  <section class="mb-20">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">Nuestros Valores</h2>
+      <p class="text-muted-foreground text-lg max-w-2xl mx-auto">Los pilares fundamentales que guían nuestra labor educativa y forman el carácter de nuestros estudiantes</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <div class="card text-center border-accent/20 shadow-lg hover:shadow-xl transition-shadow p-6">
+        <div class="w-16 h-16 bg-accent rounded-full mx-auto mb-4 flex items-center justify-center">
+          <span class="text-2xl font-bold text-accent-foreground">E</span>
+        </div>
+        <h4 class="text-xl">Excelencia</h4>
+        <p class="text-muted-foreground mt-3">Buscamos la mejora continua en todos nuestros procesos educativos, promoviendo el máximo potencial de cada estudiante.</p>
+      </div>
+
+      <div class="card text-center border-accent/20 shadow-lg hover:shadow-xl transition-shadow p-6">
+        <div class="w-16 h-16 bg-accent rounded-full mx-auto mb-4 flex items-center justify-center">
+          <span class="text-2xl font-bold text-accent-foreground">R</span>
+        </div>
+        <h4 class="text-xl">Respeto</h4>
+        <p class="text-muted-foreground mt-3">Valoramos la diversidad, promovemos la inclusión y fomentamos el respeto mutuo en toda nuestra comunidad educativa.</p>
+      </div>
+
+      <div class="card text-center border-accent/20 shadow-lg hover:shadow-xl transition-shadow p-6">
+        <div class="w-16 h-16 bg-accent rounded-full mx-auto mb-4 flex items-center justify-center">
+          <span class="text-2xl font-bold text-accent-foreground">I</span>
+        </div>
+        <h4 class="text-xl">Integridad</h4>
+        <p class="text-muted-foreground mt-3">Actuamos con honestidad, transparencia y coherencia entre nuestros principios y acciones cotidianas.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Instalaciones -->
+  <section class="mb-20">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">Nuestras Instalaciones</h2>
+      <p class="text-muted-foreground text-lg max-w-2xl mx-auto">Espacios modernos y funcionales diseñados para potenciar el aprendizaje y el desarrollo integral</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <div class="card overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+        <img src="https://placeholder-image-service.onrender.com/image/400x250?prompt=Modern library interior with wooden shelves, comfortable reading areas, natural lighting through large windows&id=22306e8b-168b-4e05-ad33-4ddbec35a4fb&customer_id=cus_T4whKBRLn1fjVu" alt="Modern school library with wooden bookshelves and comfortable reading areas bathed in natural light" class="w-full h-48 object-cover" />
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">Biblioteca Digital</h3>
+          <p class="text-muted-foreground">Más de 15,000 volúmenes físicos y acceso a bases de datos digitales internacionales.</p>
+        </div>
+      </div>
+
+      <div class="card overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+        <img src="https://placeholder-image-service.onrender.com/image/400x250?prompt=State-of-the-art science laboratory with modern equipment, microscopes, and students conducting experiments&id=22306e8b-168b-4e05-ad33-4ddbec35a4fb&customer_id=cus_T4whKBRLn1fjVu" alt="Advanced science laboratory featuring modern equipment and microscopes with students actively conducting experiments" class="w-full h-48 object-cover" />
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">Laboratorios Científicos</h3>
+          <p class="text-muted-foreground">Laboratorios de física, química y biología equipados con tecnología de vanguardia.</p>
+        </div>
+      </div>
+
+      <div class="card overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+        <img src="https://placeholder-image-service.onrender.com/image/400x250?prompt=Modern sports complex with indoor basketball court, fitness equipment, and students playing sports&id=22306e8b-168b-4e05-ad33-4ddbec35a4fb&customer_id=cus_T4whKBRLn1fjVu" alt="Modern indoor sports complex with basketball court and fitness equipment showing students engaged in athletic activities" class="w-full h-48 object-cover" />
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">Complejo Deportivo</h3>
+          <p class="text-muted-foreground">Gimnasio, canchas deportivas, piscina olímpica y espacios para actividades recreativas.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Estadísticas -->
+  <section class="mb-20">
+    <div class="bg-muted rounded-lg p-12">
+      <h2 class="text-3xl font-bold text-center text-foreground mb-12">Nuestra Trayectoria en Números</h2>
+
+      <div class="grid md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-4xl font-bold text-primary mb-2">35+</div>
+          <p class="text-muted-foreground text-lg">Años de experiencia</p>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-primary mb-2">1,200+</div>
+          <p class="text-muted-foreground text-lg">Estudiantes activos</p>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-primary mb-2">95%</div>
+          <p class="text-muted-foreground text-lg">Tasa de graduación</p>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-primary mb-2">120+</div>
+          <p class="text-muted-foreground text-lg">Docentes calificados</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--  -->
+  <section class="text-center bg-primary/5 rounded-lg p-12">
+    <h2 class="text-3xl font-bold text-foreground mb-4">¿Listo para ser parte de nuestra familia?</h2>
+    <p class="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">Descubre cómo el Instituto San Miguel puede ser el lugar donde tu hijo desarrolle todo su potencial académico y humano.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#" class="btn px-8 py-3 btn-secondary inline-block rounded-lg">Solicitar Información</a>
+      <a href="#" class="btn px-8 py-3 btn-outline inline-block rounded-lg">Agendar Visita</a>
+    </div>
+  </section>
+</div>
+</div>

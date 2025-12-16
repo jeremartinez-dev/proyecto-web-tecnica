@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <title>Contacto - Escuela Técnica</title>
+   <link rel="stylesheet" type="text/css" href="contacto.css">
+</head>
+<body>
+    <header class="barra-superior">
+        <div class="logo-titulo">
+            <img src="logo1.png" alt="Logo Escuela" class="logo" />
+            <span class="titulo">Contactos</span>
+        </div>
+
+        <div class="menu">
+            <a href="../index_log.html">Inicio</a>
+            <a href="sobre.html">Sobre la escuela</a>
+            <a href="tecnicaturas.html">Tecnicaturas</a>
+            <a href="../inscripcion.html">Inscripción</a>
+            <a href="#" class="btn-logout" onclick="logout()">Cerrar sesión</a>
+        </div>
+    </header>
+
+    <div class="separador"></div>
+
+    <main>
+        <section class="info" aria-label="Información de contacto de la escuela">
+            <h2>Información de la Escuela</h2>
+            
+            <div class="info-item">
+                <strong>Dirección:</strong>
+                <p>Ramón Cabrero 1751 (Código Postal: 1824) Lanús Este, Buenos Aires</p>
+            </div>
+
+            <div class="info-item">
+                <strong>Teléfono:</strong>
+                <p><a href="tel:+541123456789">+54 9 11 4241-8547/4240-5026</a></p>
+            </div>
+
+            <div class="info-item">
+                <strong>Correo Electrónico:</strong>
+                <p><a href="mailto:contacto@escuelatecnica.edu.ar">info@escuelakennedy.edu.ar</a></p>
+            </div>
+
+            <div class="info-item">
+                <strong>Horario de Atención:</strong>
+                <p>Lunes a Viernes: 8:00 - 17:00</p>
+            </div>
+
+            <div class="info-item">
+                <strong>Redes Sociales:</strong>
+                <p>
+                    <a href="https://facebook.com/escuelatecnica" target="_blank" rel="noopener noreferrer">Facebook</a> | 
+                    <a href="https://twitter.com/escuelatecnica" target="_blank" rel="noopener noreferrer">Twitter</a> | 
+                    <a href="https://instagram.com/escuelatecnica" target="_blank" rel="noopener noreferrer">Instagram</a>
+                </p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN FORMULARIO -->
+        <section class="formulario" aria-label="Formulario de contacto">
+            <h2>Envíanos un Mensaje</h2>
+
+            <form action="formulario.php" method="post" id="contactoForm" novalidate>
+                <label for="nombre">Nombre completo *</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required />
+
+                <label for="email">Correo electrónico *</label>
+                <input type="email" id="email" name="email" placeholder="tu@correo.com" required />
+
+                <label for="telefono">Teléfono</label>
+                <input type="text" id="telefono" name="telefono" placeholder="+54 9 11 1234 5678" />
+
+                <label for="mensaje">Mensaje *</label>
+                <textarea id="mensaje" name="mensaje" placeholder="Escribe tu consulta o mensaje aquí" required></textarea>
+
+                <button type="submit">Enviar Mensaje</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer style="background-color: #333333; padding: 30px 20px; text-align: center; color: white; font-size: 14px;">
+        <p>&copy; 2025 Escuela Técnica John F. Kennedy - Todos los derechos reservados.</p>
+        <p>Dirección: Ramón Cabrero 1751 (Código Postal: 1824) Lanús Este, Buenos Aires</p>
+        <p>Contacto: info@escuelakennedy.edu.ar | Tel: +54 9 11 4241-8547/4240-5026</p>
+    </footer>
+
+        <!--mensaje de cerrar sesion-->
+<div id="logout-message" style="display:none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    background-color: #black; color: white; padding: 12px 20px; border-radius: 8px; font-size: 16px; z-index: 99999;">
+    Has cerrado sesión correctamente.</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

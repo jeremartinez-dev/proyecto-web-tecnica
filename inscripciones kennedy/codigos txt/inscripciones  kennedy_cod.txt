@@ -1,0 +1,1585 @@
+login.html:
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Escuela JFK</title>
+  <link rel="stylesheet" href="style_login.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="container" id="form-container">
+    <h2 id="form-title">
+      <img src="logo1.png" alt="Logo" class="logo">
+      <span id="form-text">Iniciar Sesión</span>
+    </h2>
+
+<form method="post" action="login.php">
+    <div id="login-form">
+      <div class="input-group">
+        <i class="fa fa-id-card"></i>
+
+        <input type="text" id="login-email" name="email" placeholder="Email o usuario" />
+
+      </div>
+      <div class="input-group">
+        <i class="fa fa-lock"></i>
+
+        <input type="password" id="login-password" name="contra" placeholder="Contraseña" />
+
+        <i class="fa fa-eye toggle-pass" onclick="togglePassword('login-password', this)"></i>
+      </div>
+      <div class="options">
+        <label><input type="checkbox" id="remember" /> Recordarme</label>
+        <a href="#">¿No recuerdas tu contraseña?</a>
+      </div>
+      <button type="submit" >Iniciar sesión</button>
+      <div class="switch">
+        ¿No tienes una cuenta? <a onclick="toggleForm()">Registrarse</a>
+      </div>
+    </div>
+</form>
+
+
+<form method="post" action="registro.php">
+    <div id="register-form" style="display:none;">
+         <div class="input-groupt">
+      </div>
+      <div class="input-group">
+        <i class="fa fa-id-card"></i>
+        <input type="text" name="email" id="register-email" placeholder="Email" />
+      </div>
+      <div class="input-group">
+        <i class="fa fa-lock"></i>
+        <input type="password"name="contra" id="register-password"  placeholder="Contraseña" />
+        <i class="fa fa-eye toggle-pass" onclick="togglePassword('register-password', this)"></i>
+      </div>
+      <div class="options">
+        <label><input type="checkbox" id="terms" /> Acepto los términos y condiciones</label>
+      </div>
+      <button type="submit" >Registrarse</button>
+      <div class="switch">
+        ¿Ya tienes cuenta? <a onclick="toggleForm()">Iniciar sesión</a>
+      </div>
+    </div>
+</form>
+    <div class="message" id="message"></div>
+  </div>
+
+  <div id="loader-overlay">
+  <div class="loader"></div>
+</div>  
+
+<script src="script_login.js"></script>
+
+
+</body>
+</html>
+
+--------------------------
+login.php:
+
+<?php
+session_start();
+$servidor = "localhost";    
+$usuarioBD = "root";      
+$passwordBD = "";         
+$base_datos = "usuarios";  
+
+$conn = new mysqli($servidor, $usuarioBD, $passwordBD, $base_datos);
+
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Verificar que los datos fueron enviados por POST
+if (isset($_POST['email']) && isset($_POST['contra'])) {
+    $email = $_POST['email'];
+    $contra = $_POST['contra'];
+
+    $sql = "SELECT * FROM usu_datos WHERE email = '$email' AND contra = '$contra'";
+    $resultado = $conn->query($sql);
+
+    if ($resultado->num_rows > 0) {
+        $_SESSION['email'] = $email;
+         echo "<script>
+            document.body.innerHTML += '<div id=\"loader-overlay\"><div class=\"loader\"></div></div>';
+            document.getElementById('loader-overlay').style.display = 'flex';
+            setTimeout(() => { window.location.href = \"index.html\"; }, 2000);
+        </script>";
+
+
+        header("Location: index_log.html");
+          exit();
+
+        // Aquí podrías redirigir a la página principal si quieres
+        // header("Location: principal.php");
+        // exit();
+    } else {
+        echo "<script>('Usuario o contraseña incorrectos.'); window.history.back();</script>";
+    }
+} else {
+    echo "No se enviaron datos de inicio de sesión.";
+}
+
+$conn->close();
+?>
+
+----------------------------
+style_login.css:
+
+body {
+  font-family: Arial;
+  background: linear-gradient(135deg, #007bff, #fff);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background: white;
+  padding: 2rem;
+  height: 350px;
+  width: 360px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.logo {
+  width: 40px;
+  vertical-align: middle;
+  margin-right: 50px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  border: none;
+  flex: 1;
+  outline: none;
+}
+
+.input-group .toggle-pass {
+  cursor: pointer;
+  color: #007bff;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9em;
+}
+
+.switch {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.switch a {
+  color: #007bff;
+  cursor: pointer;
+}
+
+button {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 5px;
+}
+
+.message {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+  color: black;
+}
+
+#loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #004080;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+----------------------------
+script_login.js:
+
+// Cambia entre los formularios de login y registro
+function toggleForm() {
+  const loginForm = document.getElementById("login-form");
+  const registerForm = document.getElementById("register-form");
+  const formText = document.getElementById("form-text");
+
+  const isLoginVisible = loginForm.style.display !== "none";
+
+  // Alterna entre mostrar y ocultar cada formulario
+  loginForm.style.display = isLoginVisible ? "none" : "block";
+  registerForm.style.display = isLoginVisible ? "block" : "none";
+
+  // Cambia el texto del título según el formulario 
+  formText.innerText = isLoginVisible ? "Registrarse" : "Iniciar Sesión";
+
+  // Limpia cualquier mensaje anterior
+  document.getElementById("message").innerText = "";
+}
+
+// Muestra/oculta la contraseña en los campos de passwor
+function togglePassword(id, icon) {
+  const input = document.getElementById(id);
+  if (input.type === "password") {
+    input.type = "text"; // Mostrar contraseña
+    icon.classList.replace("fa-eye", "fa-eye-slash");
+  } else {
+    input.type = "password"; // Ocultar contraseña
+    icon.classList.replace("fa-eye-slash", "fa-eye");
+  }
+}
+
+// Valida si un email tiene el formato correcto
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// Registra un nuevo usuario y lo guarda en localStorage
+function register() {
+  const username = document.getElementById("register-username").value;
+  const email = document.getElementById("register-email").value;
+  const password = document.getElementById("register-password").value;
+  const terms = document.getElementById("terms").checked;
+  const msg = document.getElementById("message");
+
+  // Verifica que los campos no estén vacíos y que se hayan aceptado los términos
+  if (!username || !email || !password || !terms) {
+    msg.innerText = "Completa todos los campos.";
+    return;
+  }
+
+  // Verifica si el email es válido
+  if (!isValidEmail(email)) {
+    msg.innerText = "Email no válido.";
+    return;
+  }
+
+  // Crea un objeto con los datos del usuario
+  const user = { username, email, password };
+
+  // guarda los datos del usuario en localStorage
+  localStorage.setItem("userData", JSON.stringify(user));
+
+  // muestra mensaje y cambia al formulario del login
+  msg.innerText = "Guardar contraseña. Ya estás registrado.";
+  toggleForm();
+}
+
+// verifica si los datos ingresados coinciden con los del usuario guardado
+function login() {
+  const emailInput = document.getElementById("login-email").value;
+  const password = document.getElementById("login-password").value;
+  const msg = document.getElementById("message");
+
+  // obtiene los datos del usuario guardado en el localStorage
+  const saved = JSON.parse(localStorage.getItem("userData"));
+
+  // Compara email/usuario y contraseña
+  if (saved && (emailInput === saved.email || emailInput === saved.username) && password === saved.password) {
+    msg.innerText = "Sesión iniciada correctamente.";
+    // Podrías redirigir a otra página con:
+    // window.location.href = "inicio.html";
+  } else {
+    msg.innerText = "Contraseña o email incorrecto.";
+  }
+}
+
+----------------------------
+registro.php:
+
+<?php
+session_start();
+
+$servidor = "localhost";    
+$usuarioBD = "root";      
+$passwordBD = "";         
+$base_datos = "usuarios";  
+
+$conn = new mysqli($servidor, $usuarioBD, $passwordBD, $base_datos);
+
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
+
+if (isset($_POST['email']) && isset($_POST['contra'])) {
+    $email = $_POST['email'];
+    $contra = $_POST['contra'];
+
+    $sql = "SELECT * FROM usu_datos WHERE email = '$email'";
+    $resultado = $conn->query($sql);
+
+    if ($resultado->num_rows > 0) {
+        echo "<script>alert('Este correo ya está registrado, intenta con otro'); window.location.href='index.html';</script>";
+        exit();
+    }
+
+    $sql = "INSERT INTO usu_datos (email, contra) VALUES ('$email', '$contra')";
+    if ($conn->query($sql) === TRUE) {
+        $_SESSION['email'] = $email;
+        echo "<script>
+            document.body.innerHTML += '<div id=\"loader-overlay\"><div class=\"loader\"></div></div>';
+            document.getElementById('loader-overlay').style.display = 'flex';
+            setTimeout(() => { window.location.href = \"index_log.html\"; }, 2000);
+        </script>";
+        
+header("Location: index_log.html");
+          exit();
+
+    } else {
+        echo "Error al registrar: " . $conn->error;
+    }
+} else {
+    echo "No se enviaron datos válidos para el registro.";
+}
+
+$conn->close();
+?>
+----------------------------
+index.html:
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Escuela John F. Kennedy</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    body.modo-noche {
+     background-color: #121212;
+     color: #eeeeee;
+    }
+
+    body.modo-noche .barra-superior {
+     background-color: #222;
+    }
+
+    body.modo-noche .btn-login {
+     background-color: #eeeeee;
+     color: #222;
+    }
+
+    body.modo-noche h2, body.modo-noche h3, body.modo-noche p {
+     color: #eeeeee !important;
+    }
+
+    .tecnicaturas {
+  background: linear-gradient(to right, #004080, #ffffff);
+}
+
+body.modo-noche .tecnicaturas {
+  background: linear-gradient(to right, #1a1a1a, #2e2e2e);
+}
+
+    .barra-superior {
+      background-color: #004080;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .logo-titulo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .titulo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .menu {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .menu a::after {
+      content: "";
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: white;
+      transition: width 0.3s;
+    }
+
+    .menu a:hover::after {
+      width: 100%;
+    }
+
+    .btn-login {
+      background-color: white;
+      color: #004080;
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .btn-login:hover {
+      background-color: #003366;
+      color: white;
+    }
+
+    .carrusel {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      margin-top: 60px;
+    }
+
+    .imagenes-carrusel {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .imagen {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .imagen-activa {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .imagen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .marca-carrusel {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      color: white;
+    }
+
+    .marca-carrusel .escudo {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .nombre-colegio {
+      font-weight: bold;
+      font-size: 14px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .slider-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .slider-img.mostrar {
+    opacity: 1;
+    z-index: 1;
+  }
+
+    .separador {
+      border: none;
+      height: 3px;
+      background-color: #004080;
+      margin: 40px auto;
+      width: 80%;
+      border-radius: 2px;
+    }
+
+    .contenido {
+      padding: 40px 20px;
+    }
+
+    #loader-overlay {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: white;
+     z-index: 9999;
+     display: none;
+     justify-content: center;
+     align-items: center;
+     }
+
+   .loader {
+     border: 8px solid #f3f3f3;
+     border-top: 8px solid #004080;
+     border-radius: 50%;
+     width: 60px;
+     height: 60px;
+     animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+     0% { transform: rotate(0deg); }
+     100% { transform: rotate(360deg); }
+    }
+
+    /* Estilos responsivos */
+@media (max-width: 1024px) {
+  .barra-superior {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .menu {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .carrusel {
+    height: 60vh;
+  }
+
+  .marca-carrusel .nombre-colegio {
+    font-size: 12px;
+  }
+
+  section[style*="display: flex; align-items: flex-start;"] {
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px !important;
+    text-align: center;
+  }
+
+  section[style*="display: flex; align-items: flex-start;"] img {
+    margin-bottom: 20px;
+    max-width: 80%;
+  }
+
+  #tecnicaturas > div {
+    flex-direction: column !important;
+    padding: 0 10px;
+  }
+
+  #tecnicaturas h2 {
+    font-size: 26px;
+    padding: 0 10px;
+  }
+
+  #tecnicaturas h3 {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  #tecnicaturas p {
+    text-align: center;
+  }
+
+  #tecnicaturas .slider-img {
+    height: 200px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .titulo {
+    font-size: 16px;
+  }
+
+  .menu a {
+    font-size: 14px;
+  }
+
+  .btn-login {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .separador {
+    width: 90%;
+  }
+
+  .footer {
+    font-size: 12px;
+    padding: 20px 10px;
+  }
+
+  .slider-img {
+    height: 180px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <header class="barra-superior">
+    <div class="logo-titulo">
+      <img src="img/logo.png" alt="Logo Escuela" class="logo" />
+      <span class="titulo">Escuela John F. Kennedy</span>
+    </div>
+
+    <div class="menu">
+      <a href="#">Inicio</a>
+      <a href="#sobre">Sobre la escuela</a>
+      <a href="#tecnicaturas">Tecnicaturas</a>
+      <a href="#galeria">Galería</a>
+      <a href="#inscripcion">Inscripción</a>
+      <a href="#" class="btn-login" onclick="showLoaderAndGo('login.html')">Login</a>
+
+    </div>
+  </header>
+
+  <section class="carrusel">
+    <div class="marca-carrusel">
+      <span class="nombre-colegio">Colegio E.E.S.T N°5 John F. Kennedy - Lanús</span>
+    </div>
+
+    <div class="imagenes-carrusel">
+      <div class="imagen imagen-activa">
+        <img src="img/img1.jpg" alt="Imagen 1" />
+        <div class="overlay"></div>
+      </div>
+      <div class="imagen">
+        <img src="img/img2.jpg" alt="Imagen 2" />
+        <div class="overlay"></div>
+      </div>
+      <div class="imagen">
+        <img src="img/img3.jpg" alt="Imagen 3" />
+        <div class="overlay"></div>
+      </div>
+      <div class="imagen">
+        <img src="img/img4.jpg" alt="Imagen 4" />
+        <div class="overlay"></div>
+      </div>
+      <div class="imagen">
+        <img src="img/img5.jpg" alt="Imagen 5" />
+        <div class="overlay"></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="separador" />
+
+   <!-- Sección de bienvenida -->
+   <section style="display: flex; align-items: flex-start; gap: 30px; padding: 60px 40px; max-width: 1200px; margin: auto;"> 
+
+    <img src="img/logo.png" alt="Logo Escuela Técnica" style="max-width: 250px; border-radius: 20px;" />
+
+    <div style="flex: 1;">
+      <h2 style="font-size: 28px; margin-bottom: 20px; color: #004080;">Bienvenidos a la Escuela Técnica John F. Kennedy</h2>
+      <p style="font-size: 16px; line-height: 1.6;">
+        La Escuela de Educación Secundaria Técnica N°5 “John F. Kennedy” de Lanús es un ámbito educativo con fuerte compromiso en la formación técnico-humanística de los estudiantes. Nuestra misión es formar jóvenes con pensamiento crítico, responsabilidad social y sólidos conocimientos técnicos, capaces de integrarse a un mundo laboral cambiante y de continuar sus estudios superiores con éxito.
+      </p>
+      <p style="font-size: 16px; line-height: 1.6; margin-top: 15px;">
+        Nos caracterizamos por ofrecer tecnicaturas orientadas a las demandas actuales de la industria y la sociedad, promoviendo la innovación, el trabajo en equipo y el respeto. Contamos con docentes comprometidos, infraestructura adecuada y proyectos que vinculan la teoría con la práctica real.
+      </p>
+    </div>
+  </section>
+  
+  <hr class="separador" />
+
+  <!-- Tecnicatura <section id="tecnicaturas" style="background: linear-gradient(to right, #004080, #ffffff); padding: 60px 20px;">-->
+
+  <section id="tecnicaturas" class="tecnicaturas" style="padding: 60px 20px;">
+
+  <h2 style="text-align: center; color: white; margin-bottom: 50px; font-size: 32px;">Nuestras Tecnicaturas</h2>
+
+  <!-- Programación -->
+  <div style="display: flex; align-items: center; margin-bottom: 60px; max-width: 1200px; margin-inline: auto;">
+    <div style="flex: 1; color: white; padding-right: 30px;">
+      <h3 style="font-size: 26px; margin-bottom: 10px;">Técnico en Programación</h3>
+      <p>Formamos profesionales capaces de desarrollar software, aplicaciones web y móviles...</p>
+    </div>
+    <div style="flex: 1; position: relative; height: 300px;">
+      <img class="slider-img mostrar" data-group="prog" src="img/prog1.jpg" />
+      <img class="slider-img" data-group="prog" src="img/prog2.jpg" />
+      <img class="slider-img" data-group="prog" src="img/prog3.jpg" />
+    </div>
+  </div>
+
+  <!-- Informática -->
+  <div style="display: flex; align-items: center; margin-bottom: 60px; max-width: 1200px; margin-inline: auto;">
+    <div style="flex: 1; color: white; padding-right: 30px;">
+      <h3 style="font-size: 26px; margin-bottom: 10px;">Técnico en Informática</h3>
+      <p>Especialización en redes, hardware, mantenimiento de equipos y sistemas operativos...</p>
+    </div>
+    <div style="flex: 1; position: relative; height: 300px;">
+      <img class="slider-img mostrar" data-group="info" src="img/info1.jpg" />
+      <img class="slider-img" data-group="info" src="img/info2.jpg" />
+      <img class="slider-img" data-group="info" src="img/info3.jpg" />
+    </div>
+  </div>
+
+  <!-- Electromecánica -->
+  <div style="display: flex; align-items: center; max-width: 1200px; margin-inline: auto;">
+    <div style="flex: 1; color: white; padding-right: 30px;">
+      <h3 style="font-size: 26px; margin-bottom: 10px;">Técnico en Electromecánica</h3>
+      <p>Orientación en automatización industrial, máquinas eléctricas, neumática, hidráulica...</p>
+    </div>
+    <div style="flex: 1; position: relative; height: 300px;">
+      <img class="slider-img mostrar" data-group="elec" src="img/elec1.jpg" />
+      <img class="slider-img" data-group="elec" src="img/elec2.jpg" />
+      <img class="slider-img" data-group="elec" src="img/elec3.jpg" />
+    </div>
+  </div>
+</section>
+
+  <hr class="separador" />
+
+<!-- Frase institucional centrada -->
+<div style="text-align: center; margin: 40px auto;">
+  <div style="display: inline-block; background-color: rgba(0, 64, 128, 0.7); color: white; padding: 20px 30px; border-radius: 10px; font-size: 18px;">
+    Escuela Técnica John F. Kennedy <br />
+    Formando profesionales desde hace más de 50 años en Lanús
+  </div>
+</div>
+
+<!-- Botón modo noche/día -->
+<button id="modo-btn" title="Cambiar modo" style="position: fixed; bottom: 20px; right: 20px; background-color: #004080; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 20; font-size: 22px;">
+  ☀️
+</button>
+
+
+<!-- Footer personalizado -->
+<footer style="background-color: #333333; padding: 30px 20px; text-align: center; color: white; font-size: 14px;">
+  <p>&copy; 2025 Escuela Técnica John F. Kennedy - Todos los derechos reservados.</p>
+  <p>Dirección: Calle Ficticia 123, Lanús, Buenos Aires</p>
+  <p>Contacto: info@escuelakennedy.edu.ar | Tel: (011) 1234-5678</p>
+</footer>
+
+<div id="loader-overlay">
+  <div class="loader"></div>
+</div>
+
+
+
+  <script>
+  let indice = 0;
+  const imagenes = document.querySelectorAll(".imagenes-carrusel .imagen");
+  const tiempo = 7000;
+
+  function mostrarSiguienteImagen() {
+    imagenes[indice].classList.remove("imagen-activa");
+    indice = (indice + 1) % imagenes.length;
+    imagenes[indice].classList.add("imagen-activa");
+  }
+
+  setInterval(mostrarSiguienteImagen, tiempo);
+
+  function iniciarSlider(grupo) {
+    let i = 0;
+    const imgs = document.querySelectorAll(`.slider-img[data-group='${grupo}']`);
+    imgs[0].classList.add("mostrar");
+
+    setInterval(() => {
+      imgs[i].classList.remove("mostrar");
+      i = (i + 1) % imgs.length;
+      imgs[i].classList.add("mostrar");
+    }, 4000);
+  }
+
+  ["prog", "info", "elec"].forEach(grupo => iniciarSlider(grupo));
+
+
+  const modoBtn = document.getElementById('modo-btn');
+  let esNoche = false;
+
+  const imagenesDia = [
+    "img/img1.jpg",
+    "img/img2.jpg",
+    "img/img3.jpg",
+    "img/img4.jpg",
+    "img/img5.jpg"
+  ];
+
+  const imagenesNoche = [
+    "img/noche1.jpg",
+    "img/noche2.jpg",
+    "img/noche3.jpg",
+    "img/noche4.jpg",
+    "img/noche5.jpg"
+  ];
+
+  modoBtn.addEventListener('click', () => {
+    esNoche = !esNoche;
+    document.body.classList.toggle('modo-noche');
+    modoBtn.textContent = esNoche ? '🌙' : '☀';
+
+    // Cambiar imágenes del carrusel
+    const carruselImgs = document.querySelectorAll(".imagenes-carrusel .imagen img");
+    carruselImgs.forEach((img, i) => {
+      img.src = esNoche ? imagenesNoche[i] : imagenesDia[i];
+    });
+  });
+
+
+  function showLoaderAndGo(url) {
+    document.getElementById("loader-overlay").style.display = "flex";
+    setTimeout(() => {
+      window.location.href = url;
+    }, 1500);
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("logout") === "true") {
+    const msg = document.createElement("div");
+    msg.textContent = "Has cerrado sesión, has dejado de ser admin.";
+    msg.style.cssText = `
+      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+      background-color: ##aab7b8; color: white; padding: 12px 20px;
+      border-radius: 8px; font-size: 16px; z-index: 99999;
+    `;
+    document.body.appendChild(msg);
+    setTimeout(() => msg.remove(), 5000);
+  }
+});
+
+</script>
+
+</body>
+</html>
+
+---------------------------
+index_log.html:
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Escuela John F. Kennedy</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    body.modo-noche {
+     background-color: #121212;
+     color: #eeeeee;
+    }
+
+    body.modo-noche .barra-superior {
+     background-color: #222;
+    }
+
+    body.modo-noche .btn-login {
+     background-color: #eeeeee;
+     color: #222;
+    }
+
+    body.modo-noche h2, body.modo-noche h3, body.modo-noche p {
+     color: #eeeeee !important;
+    }
+
+    .tecnicaturas {
+  background: linear-gradient(to right, #004080, #ffffff);
+}
+
+body.modo-noche .tecnicaturas {
+  background: linear-gradient(to right, #1a1a1a, #2e2e2e);
+}
+
+    .barra-superior {
+      background-color: #004080;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .logo-titulo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .titulo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .menu {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .menu a::after {
+      content: "";
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: white;
+      transition: width 0.3s;
+    }
+
+    .menu a:hover::after {
+      width: 100%;
+    }
+
+    .btn-login {
+      background-color: white;
+      color: #004080;
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .btn-login:hover {
+      background-color: #003366;
+      color: white;
+    }
+
+    .espacio-bajo-menu {
+      margin-top: 60px; /* para dejar espacio debajo del menú fijo */
+      height: 500px; /* altura para el nuevo espacio */
+      background-color: #e0e7f1; /* color claro para diferenciar */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      color: #004080;
+      font-weight: bold;
+    }
+
+    body.modo-noche .espacio-bajo-menu {
+      background-color: #1e1e1e;
+      color: #eeeeee;
+    }
+
+    body.modo-noche .espacio-bajo-menu h1 {
+     color: #eeeeee !important;
+    }
+
+    body.modo-noche .espacio-bajo-menu p {
+     color: #cccccc !important;
+    }
+
+    body.modo-noche #ubicacion {
+     background-color: #2a2a2a !important;
+    }
+
+    body.modo-noche #ubicacion h2 {
+     color: #eeeeee !important;
+    }
+
+    body.modo-noche #ubicacion p {
+     color: #cccccc !important;
+    }
+
+    .bienvenida-titulo {
+  font-size: 24px;
+  color: #004080;
+}
+
+body.modo-noche .bienvenida-titulo {
+  color: #eeeeee;
+}
+
+    .carrusel {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+      margin-top: 60px;
+    }
+
+    .imagenes-carrusel {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .imagen {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .imagen-activa {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .imagen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .marca-carrusel {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      color: white;
+    }
+
+    .marca-carrusel .escudo {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .nombre-colegio {
+      font-weight: bold;
+      font-size: 14px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .slider-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .slider-img.mostrar {
+    opacity: 1;
+    z-index: 1;
+  }   
+
+    .separador {
+      border: none;
+      height: 3px;
+      background-color: #004080;
+      margin: 40px auto;
+      width: 80%;
+      border-radius: 2px;
+    }
+
+    .contenido {
+      padding: 40px 20px;
+    }
+
+    #loader-overlay {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: white;
+     z-index: 9999;
+     display: none;
+     justify-content: center;
+     align-items: center;
+     }
+
+   .loader {
+     border: 8px solid #f3f3f3;
+     border-top: 8px solid #004080;
+     border-radius: 50%;
+     width: 60px;
+     height: 60px;
+     animation: spin 1s linear infinite;
+    }
+
+
+    .menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .menu {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    background-color: #003366;
+    padding: 10px 0;
+  }
+
+  .menu.show {
+    display: flex;
+  }
+
+  .menu a {
+    padding: 10px;
+    width: 100%;
+  }
+
+  .barra-superior {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo-titulo {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .espacio-bajo-menu h1 {
+    font-size: 17px;
+  }
+
+  .espacio-bajo-menu p {
+    font-size: 10px;
+  }
+
+  .tecnicaturas h2 {
+    font-size: 24px;
+  }
+
+  .bloque {
+    flex-direction: column;
+  }
+
+  .bloque-texto h3 {
+    font-size: 20px;
+  }
+
+  iframe {
+    height: 250px;
+  }
+
+  #modo-btn {
+    padding: 12px;
+    font-size: 16px;
+  }
+}
+
+
+
+
+
+    @keyframes spin {
+     0% { transform: rotate(0deg); }
+     100% { transform: rotate(360deg); }
+    }
+
+  </style>
+</head>
+<body>
+
+  
+  <header class="barra-superior">
+    <div class="logo-titulo">
+      <img src="img/logo.png" alt="Logo Escuela" class="logo" />
+      <span class="titulo">Escuela John F. Kennedy-logueado</span>
+    </div>
+
+    <div class="menu">
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+      <a href="#">Inicio</a>
+      <a href="#sobre">Sobre la escuela</a>
+      <a href="#tecnicaturas">Tecnicaturas</a>
+      <a href="#inscripcion">Inscripción</a>
+      <a href="#novedades">Novedades</a>
+      <a href="#contacto">Contacto</a>
+      <a href="#" class="btn-login" onclick="showLoaderAndGo('login.html')">Login</a>  
+      <a href="#" class="btn-logout" onclick="logout()">Cerrar sesión</a>
+      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+
+
+    </div>
+
+  </header>
+
+   <div class="espacio-bajo-menu" style="flex-direction: column; align-items: flex-start; padding: 300px 40px;">
+  <h1 style="margin-top: 20px">Le damos la bienvenida a la página principal de la Escuela John F. Kennedy</h1>
+  <br>
+  <h1 style="font-size: 24px; color: #004080;">Usted ha iniciado sesion correctamente y tendra acceso a mas contenido sobre la escuela.</h1>
+  <br>
+    <h1 style="font-size: 24px; color: red;">¿Quienes somos?</h1>
+  <p style="font-size: 18px; color: #333;">La Escuela de Educación Secundaria Técnica Nº5 Jhon Fitzgerald Kennedy de Lanús es una institución pública <br> comprometida con la formación integral de sus estudiantes, combinando la excelencia académica con una sólida <br>preparación técnica. Nuestra misión es ofrecer una educación de calidad que forme jóvenes responsables, críticos,<br> creativos y preparados para enfrentar los desafíos del mundo actual, tanto en el ámbito profesional como en el personal.<br><br>
+
+  Desde su fundación, la escuela ha sido un pilar fundamental en la comunidad, brindando oportunidades de crecimiento <br>a miles de estudiantes a través de una enseñanza técnica moderna y adaptada a las necesidades del mercado laboral. <br> Nos enorgullece contar con un equipo docente altamente capacitado, instalaciones en constante mejora, talleres equipados <br>con tecnología actualizada y una oferta educativa variada que incluye tecnicaturas en Programación, Informática y Electromecánica.<br><br>
+
+  Además del enfoque técnico, en la Escuela John F. Kennedy fomentamos valores esenciales como el respeto, la responsabilidad,<br> el trabajo en equipo y el compromiso con la sociedad. A través de actividades extracurriculares, proyectos interdisciplinarios,<br> ferias de ciencia y tecnología, prácticas profesionalizantes y vínculos con empresas y universidades, buscamos que nuestros
+  <br>alumnos se desarrollen como ciudadanos activos, solidarios y preparados para el futuro.<br><br>
+
+  La escuela también promueve la participación activa de las familias en el proceso educativo, creyendo firmemente que la educación es un esfuerzo conjunto entre docentes, estudiantes y comunidad. Nuestro objetivo es acompañar a cada estudiante en su trayectoria escolar, brindándole las herramientas necesarias para alcanzar sus metas personales y profesionales.<br><br>
+
+  Hoy más que nunca, reafirmamos nuestro compromiso con una educación pública, inclusiva, técnica y de calidad. Te damos la bienvenida a nuestra comunidad educativa, un espacio de aprendizaje, crecimiento y futuro.<br><br>
+
+</p>
+</div>
+
+
+  <section class="carrusel">
+    <div class="marca-carrusel">
+      <span class="nombre-colegio">Colegio E.E.S.T N°5 John F. Kennedy - Lanús</span>
+    </div>
+
+    <div class="imagenes-carrusel">
+      <div class="imagen imagen-activa">
+        <img src="img/img1.jpg" alt="Imagen 1" />
+        <div class="overlay"></div>
+      </div>
+      <div class="imagen">
+        <img src="img/img2.jpg" alt="Imagen 2" />
+        <div class="overlay"></div>
+      </div>
+      <div class="imagen">
+        <img src="img/img3.jpg" alt="Imagen 3" />
+        <div class="overlay"></div>
+      </div>
+      <div class="imagen">
+        <img src="img/img4.jpg" alt="Imagen 4" />
+        <div class="overlay"></div>
+      </div>
+      <div class="imagen">
+        <img src="img/img5.jpg" alt="Imagen 5" />
+        <div class="overlay"></div>
+      </div>
+    </div>
+  </section>
+
+  <hr/>
+
+    <!-- Ubicación y mapa -->
+<section style="display: flex; flex-wrap: wrap; justify-content: space-between; padding: 40px 20px; background-color: #aab7b8;" id="ubicacion">
+  <div style="flex: 1; min-width: 300px; padding-right: 20px;">
+    <h2 style="color: #004080;">Ubicación de la Escuela</h2><br><br>
+    <h2 style="color: #004080;">Encontranos en:</h2><br>
+    <p style="font-size: 16px; color: #333;">
+      <strong>Dirección:</strong> Ramón Cabrero 1751, Lanús Este, Buenos Aires, Argentina<br><br>
+      <strong>Código Postal:</strong> 1824<br><br>
+      <strong>Teléfono:</strong> +54 9 11 4241-8547 / 4240-5026<br><br>
+      <strong>Email:</strong> info@escuelakennedy.edu.ar
+    </p>
+  </div>
+  <div style="flex: 1; min-width: 300px;">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.7331837326034!2d-58.39437718504913!3d-34.63516546632809!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccd50fda2eb91%3A0xc5e5b1f1b4cfcaa0!2sRam%C3%B3n%20Cabrero%201751%2C%20B1824%20Lan%C3%BAs%20Este%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1717090000000!5m2!1ses-419!2sar"
+      width="100%" height="350" style="border:0; border-radius: 8px;" allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</section>
+
+   <!-- Sección de bienvenida -->
+  
+  <hr class="separador" />
+
+  <!-- Tecnicatura <section id="tecnicaturas" style="background: linear-gradient(to right, #004080, #ffffff); padding: 60px 20px;">-->
+
+  <section id="tecnicaturas" class="tecnicaturas" style="padding: 60px 20px;">
+
+  <h2 style="text-align: center; color: white; margin-bottom: 50px; font-size: 32px;">Nuestras Tecnicaturas</h2>
+
+  <!-- Programación -->
+  <div style="display: flex; align-items: center; margin-bottom: 60px; max-width: 1200px; margin-inline: auto;">
+    <div style="flex: 1; color: white; padding-right: 30px;">
+      <h3 style="font-size: 26px; margin-bottom: 10px;">Técnico en Programación</h3>
+      <p>Formamos profesionales capaces de desarrollar software, aplicaciones web y móviles...</p>
+    </div>
+    <div style="flex: 1; position: relative; height: 300px;">
+      <img class="slider-img mostrar" data-group="prog" src="img/prog1.jpg" />
+      <img class="slider-img" data-group="prog" src="img/prog2.jpg" />
+      <img class="slider-img" data-group="prog" src="img/prog3.jpg" />
+    </div>
+  </div>
+
+  <!-- Informática -->
+  <div style="display: flex; align-items: center; margin-bottom: 60px; max-width: 1200px; margin-inline: auto;">
+    <div style="flex: 1; color: white; padding-right: 30px;">
+      <h3 style="font-size: 26px; margin-bottom: 10px;">Técnico en Informática</h3>
+      <p>Especialización en redes, hardware, mantenimiento de equipos y sistemas operativos...</p>
+    </div>
+    <div style="flex: 1; position: relative; height: 300px;">
+      <img class="slider-img mostrar" data-group="info" src="img/info1.jpg" />
+      <img class="slider-img" data-group="info" src="img/info2.jpg" />
+      <img class="slider-img" data-group="info" src="img/info3.jpg" />
+    </div>
+  </div>
+
+  <!-- Electromecánica -->
+  <div style="display: flex; align-items: center; max-width: 1200px; margin-inline: auto;">
+    <div style="flex: 1; color: white; padding-right: 30px;">
+      <h3 style="font-size: 26px; margin-bottom: 10px;">Técnico en Electromecánica</h3>
+      <p>Orientación en automatización industrial, máquinas eléctricas, neumática, hidráulica...</p>
+    </div>
+    <div style="flex: 1; position: relative; height: 300px;">
+      <img class="slider-img mostrar" data-group="elec" src="img/elec1.jpg" />
+      <img class="slider-img" data-group="elec" src="img/elec2.jpg" />
+      <img class="slider-img" data-group="elec" src="img/elec3.jpg" />
+    </div>
+  </div>
+</section>
+
+
+  <hr class="separador" />
+
+<!-- Frase institucional centrada -->
+<div style="text-align: center; margin: 40px auto;">
+  <div style="display: inline-block; background-color: rgba(0, 64, 128, 0.7); color: white; padding: 20px 30px; border-radius: 10px; font-size: 18px;">
+    Escuela Técnica John F. Kennedy <br />
+    Formando profesionales desde hace más de 50 años en Lanús
+  </div>
+</div>
+
+<!-- Botón modo noche/día -->
+<button id="modo-btn" title="Cambiar modo" style="position: fixed; bottom: 20px; right: 20px; background-color: #004080; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 20; font-size: 22px;">
+  ☀️
+</button>
+
+
+<!-- Footer personalizado -->
+<footer style="background-color: #333333; padding: 30px 20px; text-align: center; color: white; font-size: 14px;">
+  <p>&copy; 2025 Escuela Técnica John F. Kennedy - Todos los derechos reservados.</p>
+  <p>Dirección: Calle Ficticia 123, Lanús, Buenos Aires</p>
+  <p>Contacto: info@escuelakennedy.edu.ar | Tel: (011) 1234-5678</p>
+</footer>
+
+<div id="loader-overlay">
+  <div class="loader"></div>
+</div>
+
+  <!--mensaje de cerrar sesion-->
+ <div id="logout-message" style="display:none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+  background-color: #6f7579; color: white; padding: 12px 20px; border-radius: 8px; font-size: 16px; z-index: 99999;">
+  Has cerrado sesión correctamente.
+   </div>
+
+
+
+  <script>
+  let indice = 0;
+  const imagenes = document.querySelectorAll(".imagenes-carrusel .imagen");
+  const tiempo = 7000;
+
+  function mostrarSiguienteImagen() {
+    imagenes[indice].classList.remove("imagen-activa");
+    indice = (indice + 1) % imagenes.length;
+    imagenes[indice].classList.add("imagen-activa");
+  }
+
+  setInterval(mostrarSiguienteImagen, tiempo);
+
+  function iniciarSlider(grupo) {
+    let i = 0;
+    const imgs = document.querySelectorAll(`.slider-img[data-group='${grupo}']`);
+    imgs[0].classList.add("mostrar");
+
+    setInterval(() => {
+      imgs[i].classList.remove("mostrar");
+      i = (i + 1) % imgs.length;
+      imgs[i].classList.add("mostrar");
+    }, 4000);
+  }
+
+  ["prog", "info", "elec"].forEach(grupo => iniciarSlider(grupo));
+
+
+  const modoBtn = document.getElementById('modo-btn');
+  let esNoche = false;
+
+  const imagenesDia = [
+    "img/img1.jpg",
+    "img/img2.jpg",
+    "img/img3.jpg",
+    "img/img4.jpg",
+    "img/img5.jpg"
+  ];
+
+  const imagenesNoche = [
+    "img/noche1.jpg",
+    "img/noche2.jpg",
+    "img/noche3.jpg",
+    "img/noche4.jpg",
+    "img/noche5.jpg"
+  ];
+
+  modoBtn.addEventListener('click', () => {
+    esNoche = !esNoche;
+    document.body.classList.toggle('modo-noche');
+    modoBtn.textContent = esNoche ? '🌙' : '☀';
+
+    // Cambiar imágenes del carrusel
+    const carruselImgs = document.querySelectorAll(".imagenes-carrusel .imagen img");
+    carruselImgs.forEach((img, i) => {
+      img.src = esNoche ? imagenesNoche[i] : imagenesDia[i];
+    });
+  });
+
+
+  function showLoaderAndGo(url) {
+    document.getElementById("loader-overlay").style.display = "flex";
+    setTimeout(() => {
+      window.location.href = url;
+    }, 1500);
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("logout") === "true") {
+    const msg = document.createElement("div");
+    msg.textContent = "Has cerrado sesión correctamente.";
+    msg.style.cssText = `
+      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+      background-color: ##aab7b8; color: white; padding: 12px 20px;
+      border-radius: 8px; font-size: 16px; z-index: 99999;
+    `;
+    document.body.appendChild(msg);
+    setTimeout(() => msg.remove(), 5000);
+  }
+});
+
+    function logout() {
+  // Mostrar mensaje de cierre de sesión
+  const msg = document.getElementById("logout-message");
+  msg.style.display = "block";
+
+  // Redirigir después de 5 segundos
+  setTimeout(() => {
+    msg.style.display = "none";
+    window.location.href = "index.html?logout=true";
+  }, 5000);
+}
+
+  function toggleMenu() {
+    const menu = document.querySelector('.menu');
+    menu.classList.toggle('show');
+  }
+
+
+</script>
+
+</body>
+</html>
+
+
+

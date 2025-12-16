@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="css/.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffffff;
+    }
+
+    .barra-superior {
+      background-color: #004080;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .logo-titulo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .titulo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .hero-section {
+      background-color: rgba(128, 128, 128, 0.7);
+      transition: background-color 0.5s ease;
+    }
+
+    .hero-section:hover {
+      background-color: rgba(128, 128, 128, 0.9);
+    }
+
+    .menu {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .menu a::after {
+      content: "";
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: white;
+      transition: width 0.3s;
+    }
+
+    .menu a:hover::after {
+      width: 100%;
+    }
+
+    .btn-logout, .btn-login {
+      background-color: white;
+      color: #004080;
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .btn-logout:hover, .btn-login:hover {
+      background-color: #003366;
+      color: white;
+    } 
+
+    .espacio-bajo-menu {
+      margin-top: 70px;
+    }
+
+    .separador {
+      border: none;
+      height: 3px;
+      background-color: #004080;
+      margin: 40px auto;
+      width: 80%;
+      border-radius: 2px;
+    }
+
+    .presentacion {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 40px;
+      padding: 40px 8%;
+      background-color: #e0e7f1;
+    }
+
+    .presentacion-texto {
+      flex: 1;
+    }
+
+    .presentacion-texto h1 {
+      font-size: 36px;
+      font-weight: 600;
+      color: #004080;
+      margin-bottom: 20px;
+    }
+
+    .presentacion-texto p {
+      font-size: 20px;
+      line-height: 1.5;
+      color: #222;
+    }
+
+    .presentacion-imagenes {
+      flex: 1;
+      max-width: 500px;
+      height: 320px;
+      background-color: #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .presentacion-imagenes img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .presentacion-imagenes img.active {
+      display: block;
+    }
+
+    h1 {
+      color: #004080;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      border-bottom: 3px solid black;
+      padding-bottom: 0.5rem;
+    }
+
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .misionYvision{
+      background: linear-gradient(to right, #0a4d92, #5da7db, #e6f2fb);
+      color: white;
+      padding: 60px 20px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .card {
+      background:
+      border-radius: 12px; 
+      border: 1px solid rgba(15,23,42,0.06); 
+    }
+
+    .card.transparente {
+      background-color: rgba(255, 255, 255, 0.3); 
+      backdrop-filter: blur(8px); 
+    }
+
+    .card-header {
+      border-top-left-radius: 12px; 
+      border-top-right-radius: 12px; 
+    }
+
+  .extra-section {
+    background:;
+    padding: 60px 20px;
+  }
+
+  .extra-section .contenido-extra {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .extra-section h2 {
+    font-size: 2rem;
+    color: #004080;
+    margin-bottom: 20px;
+  }
+
+  .extra-section p {
+    font-size: 18px;
+    color: #333;
+  }
+
+  .btn {
+    display:inline-flex; 
+    align-items:center; 
+    justify-content:center; 
+    border-radius:10px; 
+    font-weight:600; 
+  }
+
+  .btn-secondary {
+    background-color: theme('colors.secondary');
+    color: theme('colors.secondary-foreground'); 
+  }
+
+  .btn-outline {
+    background: transparent; 
+    border: 2px solid rgba(15,23,42,0.08); 
+  }
+
+  @media (min-width:768px){
+   .md\:grid-cols-2 {
+     grid-template-columns: repeat(2, minmax(0,1fr)); 
+   } 
+ }
+</style>
+</head>
+<body>
+  <header class="barra-superior">
+    <div class="logo-titulo">
+      <img src="logo1.png" alt="Logo Escuela" class="logo" />
+      <span class="titulo">Sobre la escuela</span>
+    </div>
+
+    <div class="menu">
+      <a href="../index_log.html">Inicio</a>
+      <a href="../inscripcion.html">Inscripción</a>
+      <a href="tecnicaturas.html">Tecnicaturas</a>
+      <a href="contactos.html">Contacto</a> 
+      <a href="#" class="btn-logout" onclick="logout()">Cerrar sesión</a>
+    </div>
+  </header>
+
+  <div class="espacio-bajo-menu"/>
+
+  <section class="presentacion" id="sobre">
+   <div class="presentacion-texto">
+    <h1>Nuestra Institucion</h1>
+    <p><b>La Escuela Tecnica Jhon F. Kennedy es una institucion educativa comprometida con la formacion integral de los jovenes. Nuestro objetivo es brindar una educacion de calidad, que combine el conocimiento academico con la practica tecnica, preparando a los estudiantes para un futuro lleno de oportunidades. Nos enorgullece ser un espacio de crecimiento, aprendizaje y valores, donde cada alumno encuentra el acompañamiento necesario para desarrollar todo su potencial.<b></p>
+    </div>
+    <div class="presentacion-imagenes">
+      <img src="img1.jpg" alt="colegio 1" >
+      <img src="img1.jpg" alt="colegio 2">
+      <img src="img/" alt="colegio 3">
+    </div>
+  </section>
+
+  <hr class="separador">
+
+  <section class="mb-20">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-6"><center>Nuestra Historia</center></h2>
+        <p class="text-muted-foreground text-lg mb-6 leading-relaxed"><center>Desde su fundacion, la Escuela Jhon F. Kennedy se ha consolidado como referente en la<br> educacion tecnica. Nacida con la mision de ofrecer a la comunidad una enseñanza<br> moderna y orientada a la tecnologia, ha sido testigo de la formacion de generaciones de<br> profesionales que hoy se destacan en diferentes ambitos. Nuestro nombre honra a Jhon F.<br> Kennedy, simbolo de liderazgo, vision y compromiso con el progreso de la sociedad </center></p>
+        <p class="text-muted-foreground text-lg leading-relaxed"></p>
+      </div>
+
+      <div class="bg-muted rounded-lg p-8 text-center">
+        <img src="img/img1.jpg" alt="historia de la escuela" class="w-full h-80 object-cover rounded-lg mb-4" />
+        <p class="text-muted-foreground italic"></p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="separador">
+
+  <section class="misionYvision">
+    <div class="grid md:grid-cols-2 gap-8">
+
+      <div class="card transparente border-primary/20 shadow-lg">
+        <div class="card-header bg-primary text-primary-foreground p-6 rounded-t-lg">
+          <h3 class="text-2xl m-0">Nuestra Misión</h3>
+        </div>
+        <div class="p-8">
+          <p class="text-foreground leading-relaxed">Nuestra misión es formar personas íntegras, responsables y capacitadas en distintas áreas<br> técnicas. Buscamos brindar a los estudiantes una educación que no solo desarrolle sus<br> conocimientos y habilidades, sino también sus valores humanos. Queremos que nuestros<br> egresados puedan continuar estudios superiores, acceder al mercado laboral y convertirse<br> en agentes de cambio positivo para la comunidad.</p>
+        </div>
+      </div>
+
+      <div class="card border-secondary/20 shadow-lg">
+        <div class="card-header bg-secondary text-secondary-foreground p-6 rounded-t-lg">
+          <h3 class="text-2xl m-0">Nuestra Visión</h3>
+        </div>
+        <div class="p-8">
+          <p class="text-foreground leading-relaxed">Aspiramos a ser una institución reconocida por la calidad de su enseñanza técnica y por el<br> compromiso de su comunidad educativa. Nuestra visión es seguir innovando en la<br> educación, incorporando nuevas tecnologías y metodologías, para garantizar que nuestros<br> estudiantes estén preparados para los desafíos del futuro y se destaquen en un mundo<br> cada vez más competitivo.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="separador">
+
+  <section class="extra-section">
+    <div class="contenido-extra">
+      <h2 class="text-3xl md:text-4xl font-bold text-foreground mb-4">Nuestros Valores</h2>
+      <p class="text-muted-foreground text-lg max-w-2xl mx-auto">Los pilares fundamentales que guían nuestra labor educativa y forman el carácter de nuestros estudiantes</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <div class="card text-center border-accent/20 shadow-lg hover:shadow-xl transition-shadow p-6">
+        <div class="w-16 h-16 bg-accent rounded-full mx-auto mb-4 flex items-center justify-center">
+          <span class="text-2xl font-bold text-accent-foreground">E</span>
+        </div>
+        <h4 class="text-xl">Excelencia</h4>
+        <p class="text-muted-foreground mt-3">Buscamos la mejora continua en todos nuestros procesos educativos, promoviendo el máximo potencial de cada estudiante.</p>
+      </div>
+      <div class="card text-center border-accent/20 shadow-lg hover:shadow-xl transition-shadow p-6">
+        <div class="w-16 h-16 bg-accent rounded-full mx-auto mb-4 flex items-center justify-center">
+          <span class="text-2xl font-bold text-accent-foreground">R</span>
+        </div>
+        <h4 class="text-xl">Respeto</h4>
+        <p class="text-muted-foreground mt-3">Valoramos la diversidad, promovemos la inclusión y fomentamos el respeto mutuo en toda nuestra comunidad educativa.</p>
+      </div>
+
+      <div class="card text-center border-accent/20 shadow-lg hover:shadow-xl transition-shadow p-6">
+        <div class="w-16 h-16 bg-accent rounded-full mx-auto mb-4 flex items-center justify-center">
+          <span class="text-2xl font-bold text-accent-foreground">I</span>
+        </div>
+        <h4 class="text-xl">Integridad</h4>
+        <p class="text-muted-foreground mt-3">Actuamos con honestidad, transparencia y coherencia entre nuestros principios y acciones cotidianas.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <footer style="background-color: #333333; padding: 30px 20px; text-align: center; color: white; font-size: 14px;">
+    <p>&copy; 2025 Escuela Técnica John F. Kennedy - Todos los derechos reservados.</p>
+    <p>Dirección: Ramón Cabrero 1751 (Código Postal: 1824) Lanús Este, Buenos Aires</p>
+    <p>Contacto: info@escuelakennedy.edu.ar | Tel: +54 9 11 4241-8547/4240-5026</p>
+  </footer>
+
+      <!--mensaje de cerrar sesion-->
+    <div id="logout-message" style="display:none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    background-color: #black; color: white; padding: 12px 20px; border-radius: 8px; font-size: 16px; z-index: 99999;">
+    Has cerrado sesión correctamente.
+  </div>
+
+
+
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        var href = this.getAttribute('href');
+        if(href.length>1){
+          e.preventDefault();
+          var el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth'});
+        }
+      });
+    });
+  </script>
+  <script>
+    tailwind_config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0b71d0',
+            'primary-foreground': '#ffffff',
+            secondary: '#06b6d4',
+            'secondary-foreground': '#001219',
+            accent: '#ef4444',
+            'accent-foreground': '#ffffff',
+            muted: '#f3f4f6',
+            foreground: '#0f172a',
+            'muted-foreground': '#475569'
+          }
+        }
+      }
+    };
+
+        function logout() {
+  const msg = document.getElementById("logout-message");
+  msg.style.display = "block";
+
+  setTimeout(() => {
+    msg.style.display = "none";
+    window.location.href = "index.html?logout=true";
+  }, 5000);
+}
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</body>
+</html>

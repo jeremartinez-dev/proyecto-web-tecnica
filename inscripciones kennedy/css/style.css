@@ -1,0 +1,96 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff;
+  color: #333;
+  /* ❌ Sacamos el flex que centraba todo */
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+/* Barra superior (menú) */
+.barra-superior {
+  background-color: #004080;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  width: 100%;
+  z-index: 10;
+  position: fixed; /* ✅ Fija el menú arriba */
+  top: 0;
+  left: 0;
+}
+
+.logo-titulo {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.titulo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.menu {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  position: relative;
+}
+
+.menu a::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s;
+}
+
+.menu a:hover::after {
+  width: 100%;
+}
+
+.btn-logout {
+  background-color: white;
+  color: #004080;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-logout:hover {
+  background-color: #003366;
+  color: white;
+}
+
+/* ✅ Agregamos margen para que el contenido no quede tapado por el menú */
+.container {
+  margin-top: 100px;
+  padding: 20px;
+  text-align: center;
+}

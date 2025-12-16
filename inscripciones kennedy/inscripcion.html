@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario de Inscripción - Escuela Técnica Kennedy</title>
+<style>
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f6fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+
+  .barra-superior {
+    background-color: #004080;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    width: 100%;
+    z-index: 10;
+    left: 0;
+  }
+
+  .logo-titulo {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  .titulo {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .menu {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+  }
+
+  .menu a::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s;
+  }
+
+  .menu a:hover::after {
+    width: 100%;
+  }
+
+  .btn-logout {
+    background-color: white;
+    color: #004080;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .btn-logout:hover {
+    background-color: #003366;
+    color: white;
+  }
+
+  .container {
+  margin-top: 50px; 
+  padding: 20px;
+  text-align: center;
+}
+
+.form-container {
+  max-width: 500px;
+  margin: 0 auto; 
+  background-color: #f4f4f4;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.form-container h1 {
+  margin-bottom: 15px;
+  color: #004080;
+}
+
+.form-container label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.form-container input,
+.form-container select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #004080;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+button:hover {
+  background-color: #003366;
+}
+
+.btn-secundario {
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #004080;
+  font-weight: bold;
+}
+
+.btn-secundario:hover {
+  text-decoration: underline;
+}
+
+.container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+form input[type="text"],
+form input[type="date"],
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; 
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.btn-secundario {
+    display: inline-block;
+    background-color: #6c757d;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.btn-secundario:hover {
+    background-color: #5a6268;
+}
+
+.legajos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.legajos-table th, .legajos-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.legajos-table th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+.legajos-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.info-inscripcion {
+  max-width: 950px;
+  background: white;
+  border-radius: 12px;
+  margin: 40px auto 20px;
+  padding: 30px 40px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  line-height: 1.6;
+}
+
+.info-inscripcion h2 {
+  text-align: center;
+  color: #004aad;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.info-inscripcion strong {
+  color: #000;
+}
+
+.info-inscripcion ul {
+  margin-left: 25px;
+}
+
+.info-inscripcion li {
+  margin-bottom: 6px;
+}
+
+.alerta {
+  background-color: #fffae5;
+  border-left: 4px solid #ffc107;
+  padding: 10px 15px;
+  margin: 15px 0;
+  color: #4e4e4e;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+form {
+  background-color: white;
+  max-width: 600px;
+  margin: 0 auto 50px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  color: ;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #004aad;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #003580;
+}
+
+.btn-secundario {
+  display: inline-block;
+  text-align: center;
+  padding: 10px 15px;
+  background-color: #ccc;
+  border-radius: 6px;
+  color: black;
+  text-decoration: none;
+  margin-top: 10px;
+  transition: background 0.3s;
+}
+
+.btn-secundario:hover {
+  background-color: #b5b5b5;
+}
+
+.pdf-btn {
+  display: inline-block;
+  background-color: #999999;
+  color: white;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  position: absolute;
+  bottom: 25px;
+  right: 25px;
+  transition: background 0.3s;
+}
+
+.pdf-btn:hover {
+  background-color: black;
+}
+</style>
+</head>
+<body>
+
+  <header class="barra-superior">
+    <div class="logo-titulo">
+      <img src="img/logo.png" alt="Logo Escuela" class="logo" />
+      <span class="titulo">Inscripcion</span>
+    </div>
+
+    <div class="menu">
+      <a href="index_log.html">Inicio</a>
+      <a href="paginas secundarias/sobre.html">Sobre la escuela</a>
+      <a href="paginas secundarias/tecnicaturas.html">Tecnicaturas</a>
+      <a href="paginas secundarias/contactos.html">Contacto</a>
+      <a href="#" class="btn-logout" onclick="logout()">Cerrar sesión</a>
+    </div>
+  </header>
+
+    <section class="info-inscripcion">
+      <h2>INSCRIPCIÓN DE INGRESANTES 2026</h2>
+      <p>Haremos un primer acercamiento para quienes deseen inscribirse a <strong>1° año en el ciclo lectivo 2026</strong>.
+        <br>Del <strong>26 al 28 de noviembre de 2025</strong> de <strong>09 a 11 hs</strong> y de <strong>14 a 16 hs</strong>.
+      </p>
+      <p>Se deberá presentar fotocopia del DNI del alumno y certificado de alumno regular de la escuela a la cual asiste. Además, se tomarán datos e información particular de contacto para conformar un registro.
+      </p>
+      <p>Una vez realizado este primer contacto de forma personal, su hijo/a quedará registrado como solicitante de una vacante para cursar el año en el ciclo lectivo 2026.
+      </p>
+
+      <div class="alerta">
+        <strong>ACLARACIÓN IMPORTANTE:</strong> La conformación del registro de contacto no implica reserva de vacante y/o turno.
+      </div>
+
+      <p>La inscripción definitiva se realizará a partir del momento en que el alumno haya promovido el año en curso y de acuerdo al siguiente cronograma:
+      </p>
+      <ul>
+        <li>
+          <strong>22/12 al 23/12:</strong> Inscripción definitiva, de 9:00 a 16:00 hs, con la
+          <strong>documentación descargada completa y firmada</strong>.
+          <br>Agregar en una carpeta verde de 3 solapas: fotocopia partida de nacimiento, DNI (2 juegos), CUIL del alumno, fotocopia DNI padres o tutor, fotocopia CUIL padres/tutor, fotocopia del plan de vacunación y constancia de aprobación de 6° grado.
+        </li>
+      </ul>
+
+      <p>Quienes descarguen los formularios deberán presentarlos dentro de una carpeta agregando los certificados; mientras que en la escuela se ofrece la carpeta ya preparada con la documentación para completar.
+      </p>
+
+      <div class="alerta">
+        <strong>ACLARACIÓN:</strong> La asignación de vacantes y turnos estará sujeta a la cantidad de inscriptos y a las vacantes disponibles.<br>Una vez finalizado el periodo, y según la normativa vigente, se determinará si corresponde realizar un sorteo para adjudicación de vacantes o turnos.
+      </div>
+    </section>
+
+    <center>
+    <div class="container">
+      <div class="form-container">
+        <h1>Formulario de Inscripción</h1>
+        <p>Complete los datos para inscribirse en una tecnicatura</p>
+
+
+        <form id="inscripcionForm" action="inscripcion.php" method="POST">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" required>
+
+          <label for="apellido">Apellido:</label>
+          <input type="text" id="apellido" name="apellido" required>
+
+          <label for="dni">DNI:</label>
+          <input type="text" id="dni" name="dni" required pattern="[0-9]+" title="Solo números">
+
+          <label for="nacionalidad">Nacionalidad:</label>
+          <input type="text" id="nacionalidad" name="nacionalidad" required>
+
+          <label for="domicilio">Domicilio:</label>
+          <input type="text" id="domicilio" name="domicilio" required>
+
+          <label for="telefono">Teléfono / Celular:</label>
+          <input type="tel" id="telefono" name="telefono" pattern="[0-9+ ]+" title="Solo números y + permitido" required>
+
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+
+          <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+          <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+
+          <label for="genero">Género:</label>
+          <select id="genero" name="genero" required>
+            <option value="">Seleccione una opción</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Otro">Otro</option>
+         </select>
+
+         <label for="tecnicatura">Tecnicatura:</label>
+         <p>La tecnicatura podrá cambiarse al inicio de inscripciones de 4to año si el alumno lo desea.</p>
+         <select id="tecnicatura" name="tecnicatura" required>
+           <option value="">Seleccione una tecnicatura</option>
+           <option value="programacion">Programación</option>
+           <option value="informatica">Informática</option>
+           <option value="electromecanica">Electromecánica</option>
+         </select>
+
+         <button type="submit">Inscribir Estudiante</button>
+         <a href="legajos.php" class="btn-secundario">Ver Legajos</a>
+         <a href="DOCUMENTACION_INSCRIPCION.pdf" target="_blank" class="pdf-btn"> Descargar PDF</a>
+       </form>
+     </div>
+   </div>
+ </center>
+
+ 
+    <!--mensaje de cerrar sesion-->
+    <div id="logout-message" style="display:none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    background-color: #black; color: white; padding: 12px 20px; border-radius: 8px; font-size: 16px; z-index: 99999;">
+    Has cerrado sesión correctamente.
+  </div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

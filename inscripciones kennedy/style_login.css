@@ -1,0 +1,103 @@
+body {
+  font-family: Arial;
+  background: linear-gradient(135deg, #007bff, #fff);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background: white;
+  padding: 2rem;
+  height: 350px;
+  width: 360px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.logo {
+  width: 40px;
+  vertical-align: middle;
+  margin-right: 50px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  border: none;
+  flex: 1;
+  outline: none;
+}
+
+.input-group .toggle-pass {
+  cursor: pointer;
+  color: #007bff;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9em;
+}
+
+.switch {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.switch a {
+  color: #007bff;
+  cursor: pointer;
+}
+
+button {
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.7rem;
+  border-radius: 5px;
+}
+
+.message {
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: bold;
+  color: black;
+}
+
+#loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #004080;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
